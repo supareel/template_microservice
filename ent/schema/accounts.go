@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 )
 
@@ -24,5 +25,8 @@ func (Accounts) Fields() []ent.Field {
 
 // Edges of the Accounts.
 func (Accounts) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+		edge.To("from_account_id", Transfers.Type),
+		edge.To("to_account_id", Transfers.Type),
+	}
 }

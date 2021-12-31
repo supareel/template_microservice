@@ -6,6 +6,7 @@ CREATE TABLE "accounts" (
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
+// record all changes to 1 account balance credit or debit
 CREATE TABLE "entries" (
   "id" bigserial PRIMARY KEY,
   "account_id" bigint NOT NULL,
@@ -13,6 +14,7 @@ CREATE TABLE "entries" (
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
+// transactions between 2 accounts 
 CREATE TABLE "transfers" (
   "id" bigserial PRIMARY KEY,
   "from_account_id" bigint NOT NULL,
