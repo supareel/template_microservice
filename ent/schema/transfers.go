@@ -27,8 +27,8 @@ func (Transfers) Fields() []ent.Field {
 func (Transfers) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("account_of", Accounts.Type).
-				Ref("from_account_id").Unique(),
+			Ref("from_account_id").Unique(),
 		edge.From("account_to", Accounts.Type).
-				Ref("to_account_id").Unique(),
+			Ref("to_account_id").Unique(),
 	}
 }
