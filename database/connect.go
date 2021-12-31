@@ -2,20 +2,45 @@ package database
 
 import (
 	"context"
+	"database/sql"
+	"fmt"
 	"gomicro/ent"
-	"gomicro/ent/migrate"
 	"log"
+	"os"
+
+	"entgo.io/ent/dialect"
+	entsql "entgo.io/ent/dialect/sql"
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
-func ConnectToDB() {
-
-	client, err := ent.Open("postgres", "root:root@tcp(localhost:5432)/simple_bank")
+// Open new connection
+func Open(databaseUrl string) *ent.Client {
+	db, err := sql.Open("pgx", databaseUrl)
 	if err != nil {
-		log.Fatalf("failed opening connection to sqlite: %v", err)
+			log.Fatal(err)
 	}
-	defer client.Close()
-	// Run the auto migration tool.
-	if err := client.Schema.Create(context.Background(), migrate.WithDropIndex(true), migrate.WithDropColumn(true)); err != nil {
-		log.Fatalf("failed creating schema resources: %v", err)
+
+	// Create an ent.Driver from `db`.
+	drv := entsql.OpenDB(dialect.Postgres, db)
+	return ent.NewClient(ent.Driver(drv))
+}
+
+
+func ConnectToDB() {
+	DbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s", 
+	os.Getenv("DB_USERNAME"),	os.Getenv("DB_PASS"),	os.Getenv("DB_SERVER"),	
+	os.Getenv("DB_PORT"), os.Getenv("DB_NAME"), os.Getenv("DB_SSL"))
+	fmt.Printf("DATABASE : %s\n", DbUrl)
+	client := Open(DbUrl)
+
+	// Your code. For example:
+	ctx := context.Background()
+	if err := client.Schema.Create(ctx); err != nil {
+			log.Fatal(err)
 	}
+	users, err := client.Accounts.Query().All(ctx)
+	if err != nil {
+			log.Fatal(err)
+	}
+	log.Println(users)
 }

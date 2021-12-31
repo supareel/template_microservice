@@ -16,7 +16,7 @@ type Accounts struct {
 func (Accounts) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("owner").NotEmpty(),
-		field.Int8("balance").Positive(),
+		field.Int64("balance").Positive(),
 		field.String("currency").NotEmpty(),
 		field.Time("created_at").Default(time.Now().UTC),
 	}

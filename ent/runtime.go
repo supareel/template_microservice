@@ -21,7 +21,7 @@ func init() {
 	// accountsDescBalance is the schema descriptor for balance field.
 	accountsDescBalance := accountsFields[1].Descriptor()
 	// accounts.BalanceValidator is a validator for the "balance" field. It is called by the builders before save.
-	accounts.BalanceValidator = accountsDescBalance.Validators[0].(func(int8) error)
+	accounts.BalanceValidator = accountsDescBalance.Validators[0].(func(int64) error)
 	// accountsDescCurrency is the schema descriptor for currency field.
 	accountsDescCurrency := accountsFields[2].Descriptor()
 	// accounts.CurrencyValidator is a validator for the "currency" field. It is called by the builders before save.

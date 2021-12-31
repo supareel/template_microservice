@@ -46,7 +46,7 @@ var (
 	// OwnerValidator is a validator for the "owner" field. It is called by the builders before save.
 	OwnerValidator func(string) error
 	// BalanceValidator is a validator for the "balance" field. It is called by the builders before save.
-	BalanceValidator func(int8) error
+	BalanceValidator func(int64) error
 	// CurrencyValidator is a validator for the "currency" field. It is called by the builders before save.
 	CurrencyValidator func(string) error
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.

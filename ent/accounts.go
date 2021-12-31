@@ -19,7 +19,7 @@ type Accounts struct {
 	// Owner holds the value of the "owner" field.
 	Owner string `json:"owner,omitempty"`
 	// Balance holds the value of the "balance" field.
-	Balance int8 `json:"balance,omitempty"`
+	Balance int64 `json:"balance,omitempty"`
 	// Currency holds the value of the "currency" field.
 	Currency string `json:"currency,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
@@ -68,7 +68,7 @@ func (a *Accounts) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field balance", values[i])
 			} else if value.Valid {
-				a.Balance = int8(value.Int64)
+				a.Balance = value.Int64
 			}
 		case accounts.FieldCurrency:
 			if value, ok := values[i].(*sql.NullString); !ok {

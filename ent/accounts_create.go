@@ -27,7 +27,7 @@ func (ac *AccountsCreate) SetOwner(s string) *AccountsCreate {
 }
 
 // SetBalance sets the "balance" field.
-func (ac *AccountsCreate) SetBalance(i int8) *AccountsCreate {
+func (ac *AccountsCreate) SetBalance(i int64) *AccountsCreate {
 	ac.mutation.SetBalance(i)
 	return ac
 }
@@ -195,7 +195,7 @@ func (ac *AccountsCreate) createSpec() (*Accounts, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := ac.mutation.Balance(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt8,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: accounts.FieldBalance,
 		})

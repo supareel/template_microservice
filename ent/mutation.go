@@ -32,8 +32,8 @@ type AccountsMutation struct {
 	typ           string
 	id            *int
 	owner         *string
-	balance       *int8
-	addbalance    *int8
+	balance       *int64
+	addbalance    *int64
 	currency      *string
 	created_at    *time.Time
 	clearedFields map[string]struct{}
@@ -158,13 +158,13 @@ func (m *AccountsMutation) ResetOwner() {
 }
 
 // SetBalance sets the "balance" field.
-func (m *AccountsMutation) SetBalance(i int8) {
+func (m *AccountsMutation) SetBalance(i int64) {
 	m.balance = &i
 	m.addbalance = nil
 }
 
 // Balance returns the value of the "balance" field in the mutation.
-func (m *AccountsMutation) Balance() (r int8, exists bool) {
+func (m *AccountsMutation) Balance() (r int64, exists bool) {
 	v := m.balance
 	if v == nil {
 		return
@@ -175,7 +175,7 @@ func (m *AccountsMutation) Balance() (r int8, exists bool) {
 // OldBalance returns the old "balance" field's value of the Accounts entity.
 // If the Accounts object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AccountsMutation) OldBalance(ctx context.Context) (v int8, err error) {
+func (m *AccountsMutation) OldBalance(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldBalance is only allowed on UpdateOne operations")
 	}
@@ -190,7 +190,7 @@ func (m *AccountsMutation) OldBalance(ctx context.Context) (v int8, err error) {
 }
 
 // AddBalance adds i to the "balance" field.
-func (m *AccountsMutation) AddBalance(i int8) {
+func (m *AccountsMutation) AddBalance(i int64) {
 	if m.addbalance != nil {
 		*m.addbalance += i
 	} else {
@@ -199,7 +199,7 @@ func (m *AccountsMutation) AddBalance(i int8) {
 }
 
 // AddedBalance returns the value that was added to the "balance" field in this mutation.
-func (m *AccountsMutation) AddedBalance() (r int8, exists bool) {
+func (m *AccountsMutation) AddedBalance() (r int64, exists bool) {
 	v := m.addbalance
 	if v == nil {
 		return
@@ -367,7 +367,7 @@ func (m *AccountsMutation) SetField(name string, value ent.Value) error {
 		m.SetOwner(v)
 		return nil
 	case accounts.FieldBalance:
-		v, ok := value.(int8)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -418,7 +418,7 @@ func (m *AccountsMutation) AddedField(name string) (ent.Value, bool) {
 func (m *AccountsMutation) AddField(name string, value ent.Value) error {
 	switch name {
 	case accounts.FieldBalance:
-		v, ok := value.(int8)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

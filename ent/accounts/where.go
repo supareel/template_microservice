@@ -100,7 +100,7 @@ func Owner(v string) predicate.Accounts {
 }
 
 // Balance applies equality check predicate on the "balance" field. It's identical to BalanceEQ.
-func Balance(v int8) predicate.Accounts {
+func Balance(v int64) predicate.Accounts {
 	return predicate.Accounts(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldBalance), v))
 	})
@@ -232,21 +232,21 @@ func OwnerContainsFold(v string) predicate.Accounts {
 }
 
 // BalanceEQ applies the EQ predicate on the "balance" field.
-func BalanceEQ(v int8) predicate.Accounts {
+func BalanceEQ(v int64) predicate.Accounts {
 	return predicate.Accounts(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldBalance), v))
 	})
 }
 
 // BalanceNEQ applies the NEQ predicate on the "balance" field.
-func BalanceNEQ(v int8) predicate.Accounts {
+func BalanceNEQ(v int64) predicate.Accounts {
 	return predicate.Accounts(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldBalance), v))
 	})
 }
 
 // BalanceIn applies the In predicate on the "balance" field.
-func BalanceIn(vs ...int8) predicate.Accounts {
+func BalanceIn(vs ...int64) predicate.Accounts {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -263,7 +263,7 @@ func BalanceIn(vs ...int8) predicate.Accounts {
 }
 
 // BalanceNotIn applies the NotIn predicate on the "balance" field.
-func BalanceNotIn(vs ...int8) predicate.Accounts {
+func BalanceNotIn(vs ...int64) predicate.Accounts {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -280,28 +280,28 @@ func BalanceNotIn(vs ...int8) predicate.Accounts {
 }
 
 // BalanceGT applies the GT predicate on the "balance" field.
-func BalanceGT(v int8) predicate.Accounts {
+func BalanceGT(v int64) predicate.Accounts {
 	return predicate.Accounts(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldBalance), v))
 	})
 }
 
 // BalanceGTE applies the GTE predicate on the "balance" field.
-func BalanceGTE(v int8) predicate.Accounts {
+func BalanceGTE(v int64) predicate.Accounts {
 	return predicate.Accounts(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldBalance), v))
 	})
 }
 
 // BalanceLT applies the LT predicate on the "balance" field.
-func BalanceLT(v int8) predicate.Accounts {
+func BalanceLT(v int64) predicate.Accounts {
 	return predicate.Accounts(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldBalance), v))
 	})
 }
 
 // BalanceLTE applies the LTE predicate on the "balance" field.
-func BalanceLTE(v int8) predicate.Accounts {
+func BalanceLTE(v int64) predicate.Accounts {
 	return predicate.Accounts(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldBalance), v))
 	})

@@ -34,14 +34,14 @@ func (au *AccountsUpdate) SetOwner(s string) *AccountsUpdate {
 }
 
 // SetBalance sets the "balance" field.
-func (au *AccountsUpdate) SetBalance(i int8) *AccountsUpdate {
+func (au *AccountsUpdate) SetBalance(i int64) *AccountsUpdate {
 	au.mutation.ResetBalance()
 	au.mutation.SetBalance(i)
 	return au
 }
 
 // AddBalance adds i to the "balance" field.
-func (au *AccountsUpdate) AddBalance(i int8) *AccountsUpdate {
+func (au *AccountsUpdate) AddBalance(i int64) *AccountsUpdate {
 	au.mutation.AddBalance(i)
 	return au
 }
@@ -178,14 +178,14 @@ func (au *AccountsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := au.mutation.Balance(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt8,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: accounts.FieldBalance,
 		})
 	}
 	if value, ok := au.mutation.AddedBalance(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt8,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: accounts.FieldBalance,
 		})
@@ -230,14 +230,14 @@ func (auo *AccountsUpdateOne) SetOwner(s string) *AccountsUpdateOne {
 }
 
 // SetBalance sets the "balance" field.
-func (auo *AccountsUpdateOne) SetBalance(i int8) *AccountsUpdateOne {
+func (auo *AccountsUpdateOne) SetBalance(i int64) *AccountsUpdateOne {
 	auo.mutation.ResetBalance()
 	auo.mutation.SetBalance(i)
 	return auo
 }
 
 // AddBalance adds i to the "balance" field.
-func (auo *AccountsUpdateOne) AddBalance(i int8) *AccountsUpdateOne {
+func (auo *AccountsUpdateOne) AddBalance(i int64) *AccountsUpdateOne {
 	auo.mutation.AddBalance(i)
 	return auo
 }
@@ -398,14 +398,14 @@ func (auo *AccountsUpdateOne) sqlSave(ctx context.Context) (_node *Accounts, err
 	}
 	if value, ok := auo.mutation.Balance(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt8,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: accounts.FieldBalance,
 		})
 	}
 	if value, ok := auo.mutation.AddedBalance(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt8,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: accounts.FieldBalance,
 		})
