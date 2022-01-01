@@ -14,8 +14,13 @@ import (
 )
 
 var Conn *ent.Client
+var ctx = context.Background()
+
 
 func ConnectToDB() {
+	if Conn != nil {
+		return
+	}
 	DbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
 		os.Getenv("DB_USERNAME"), os.Getenv("DB_PASS"), os.Getenv("DB_SERVER"),
 		os.Getenv("DB_PORT"), os.Getenv("DB_NAME"), os.Getenv("DB_SSL"))
@@ -33,14 +38,4 @@ func ConnectToDB() {
 	if err := Conn.Schema.Create(ctx); err != nil {
 		log.Fatal(err)
 	}
-	demo_query()
-}
-
-func demo_query() {
-	ctx := context.Background()
-	users, err := Conn.Accounts.Query().All(ctx)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println(users)
 }

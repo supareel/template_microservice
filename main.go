@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gomicro/database"
 
 	"github.com/joho/godotenv"
@@ -15,7 +14,4 @@ func main() {
 	// 	Balance: 100,
 	// 	Currency: "INR",
 	// })
-
-	allAccounts := database.DeleteAccountBalance(4)
-	fmt.Println(allAccounts)
 }
