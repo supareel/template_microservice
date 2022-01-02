@@ -6,27 +6,6 @@ import (
 	"gomicro/ent"
 )
 
-// create an account
-func CreateTransfer(data *ent.Transfers) (*ent.Transfers, constants.DBOperationStatus, error) {
-	tx, err := Conn.Tx(ctx)
-	if err != nil {
-		return nil, constants.ERROR, err
-	}
-	resp, err := tx.Transfers.Create().
-  SetFromAccountID(data.FromAccountID).
-  SetToAccountID(data.ToAccountID).
-  SetAmount(data.Amount).
-  Save(ctx)
-	
-  if err != nil {
-		fmt.Println(err)
-		err = rollback(tx)
-		return resp, constants.ERROR, err
-	}
-	tx.Commit()
-	return resp, constants.CREATED, err
-}
-
 // get all account
 func GetAllTransfers() ([]*ent.Transfers, constants.DBOperationStatus, error) {
 	tx, err := Conn.Tx(ctx)
@@ -81,7 +60,10 @@ func TransferMoney(to_id int, from_id int, amount int64) (*ent.Transfers, consta
 	if err != nil {
 		return nil, constants.ERROR, err
 	}
-	transaction, err := tx.Transfers.Create().SetFromAccountID(from_id).SetToAccountID(to_id).Save(ctx)
+	transaction, err := tx.Transfers.Create().
+	SetFromAccountID(from_id).
+	SetToAccountID(to_id).
+	SetAmount(amount).Save(ctx)
 	if err != nil {
 		return nil, constants.ERROR, err
 	}
