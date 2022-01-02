@@ -16,8 +16,8 @@ type Transfers struct {
 // Fields of the Transfers.
 func (Transfers) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int64("from_accout_id").Positive(),
-		field.Int64("to_account_id").Positive(),
+		field.Int("from_account_id").Positive(),
+		field.Int("to_account_id").Positive(),
 		field.Int64("amount").Positive().Default(0),
 		field.Time("created_at").Default(time.Now().UTC),
 	}

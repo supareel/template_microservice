@@ -39,3 +39,12 @@ func ConnectToDB() {
 		log.Fatal(err)
 	}
 }
+
+
+func rollback(tx *ent.Tx) error {
+	var err error = nil
+	if rerr := tx.Rollback(); rerr != nil {
+			err = fmt.Errorf("%w: %v", err, rerr)
+	}
+	return err
+}
