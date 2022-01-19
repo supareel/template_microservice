@@ -18,7 +18,9 @@ jobs:
         env:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: secret
-           # The default PostgreSQL port
+          POSTGRES_DB: postgres
+          POSTGRES_HOST: localhost
+          # The default PostgreSQL port
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
         # Set health checks to wait until postgres has started
         options: >-
