@@ -35,6 +35,7 @@ func ConnectToDB() {
 	Conn = ent.NewClient(ent.Driver(drv))
 
 	ctx := context.Background()
+	// run migration
 	if err := Conn.Schema.Create(ctx); err != nil {
 		log.Fatal(err)
 	}
