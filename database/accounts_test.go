@@ -2,7 +2,6 @@ package database
 
 import (
 	"context"
-	"gomicro/constants"
 	"gomicro/ent"
 	"gomicro/util"
 	"os"
@@ -24,7 +23,7 @@ func connectTestDB() {
 	ConnectToDB()
 }
 
-func createRandomAccount(t *testing.T) (*ent.Accounts, *ent.Accounts, constants.DBOperationStatus, error){
+func createRandomAccount(t *testing.T) (*ent.Accounts, *ent.Accounts, error){
   connectTestDB()
 
   testData := &ent.Accounts{
@@ -33,8 +32,8 @@ func createRandomAccount(t *testing.T) (*ent.Accounts, *ent.Accounts, constants.
     Currency: util.RandomCurrency(),
   }
 
-  resp, status, err := CreateAccount(testData)
-  return testData, resp, status, err
+  resp, err := CreateAccount(testData)
+  return testData, resp, err
 }
 
 func clearAccountsTable() {
@@ -49,9 +48,7 @@ func clearAccountsTable() {
 
 func TestCreateAccount(t *testing.T) {
   clearAccountsTable()
-  testData, resp, status, _ := createRandomAccount(t)
-  require.NotEqual(t, status, constants.ERROR)
-  require.Equal(t, status, constants.CREATED)
+  testData, resp,  _ := createRandomAccount(t)
   require.Equal(t, testData.Owner, resp.Owner)
   require.Equal(t, testData.Balance, resp.Balance)
   require.Equal(t, testData.Currency, resp.Currency)
@@ -62,11 +59,9 @@ func TestCreateAccount(t *testing.T) {
 
 func TestGetAccount(t *testing.T){
   clearAccountsTable()
-  _, account1, _, _ := createRandomAccount(t)
-  account2, status2, _ := GetAccountById(account1.ID)
-
-  require.NotEqual(t, status2, constants.ERROR)
-  require.Equal(t, status2, constants.QUERIED)
+  _, account1, _ := createRandomAccount(t)
+  account2, _ := GetAccountById(account1.ID)
+  
   require.Equal(t, account1.Owner, account2.Owner)
   require.Equal(t, account1.Balance, account2.Balance)
   require.Equal(t, account1.Currency, account2.Currency)
@@ -75,12 +70,10 @@ func TestGetAccount(t *testing.T){
 
 func TestUpdateAccountBalance(t *testing.T){
   clearAccountsTable()
-  _, account1, _ , _ := createRandomAccount(t)
+  _, account1, _ := createRandomAccount(t)
   new_balance := util.RandomInt(300, 10000)
-  account2, status2, _ := UpdateAccountBalance(account1.ID, new_balance)
+  account2,  _ := UpdateAccountBalance(account1.ID, new_balance)
 
-  require.NotEqual(t, status2, constants.ERROR)
-  require.Equal(t, status2, constants.UPDATED)
   require.Equal(t, account1.Owner, account2.Owner)
   require.Equal(t, new_balance, account2.Balance)
   require.Equal(t, account1.Currency, account2.Currency)
@@ -89,14 +82,11 @@ func TestUpdateAccountBalance(t *testing.T){
 
 func TestDeleteAccount(t *testing.T){
   clearAccountsTable()
-  _, account1, _, _ := createRandomAccount(t)
-  status1, err := DeleteAccount(account1.ID)
+  _, account1, _ := createRandomAccount(t)
+  err := DeleteAccount(account1.ID)
   require.NoError(t, err)
-  require.NotEqual(t, status1, constants.ERROR)
-  require.Equal(t, status1, constants.DELETED)
 
-  account2, status2, err := GetAccountById(account1.ID)
-  require.Equal(t, status2, constants.ERROR)
+  account2, err := GetAccountById(account1.ID)
   require.EqualError(t, err, "ent: accounts not found")
   require.Empty(t, account2)
 }
@@ -104,13 +94,11 @@ func TestDeleteAccount(t *testing.T){
 
 func TestGetAllAccounts(t *testing.T){
   clearAccountsTable()
-  _, account1, _, _ := createRandomAccount(t)
-  _, account2, _, _ := createRandomAccount(t)
+  _, account1, _ := createRandomAccount(t)
+  _, account2, _ := createRandomAccount(t)
 
-  accountList, status2, err := GetAllAccounts()
+  accountList, err := GetAllAccounts()
   require.NoError(t, err)
-  require.NotEqual(t, status2, constants.ERROR)
-  require.Equal(t, status2, constants.QUERIED)
 
   require.Equal(t, 2, len(accountList))
   require.NotEmpty(t, account1, accountList[0])

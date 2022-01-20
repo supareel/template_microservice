@@ -3,12 +3,9 @@ package account;
 option go_package = "gomicro/proto";
 
 message Account {
-  enum CURRENCY {
-    USD = 0;
-    INR= 1;
-  }
+
   string owner = 1;
-  uint64 balance = 2;
-  CURRENCY currency = 3;
+  int64 balance = 2;
+  string currency = 3;
 }
 

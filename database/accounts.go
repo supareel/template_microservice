@@ -2,61 +2,60 @@ package database
 
 import (
 	"fmt"
-	"gomicro/constants"
 	"gomicro/ent"
 )
 
 // create an account
-func CreateAccount(data *ent.Accounts) (*ent.Accounts, constants.DBOperationStatus, error) {
+func CreateAccount(data *ent.Accounts) (*ent.Accounts, error) {
 	resp, err := Conn.Accounts.Create().SetOwner(data.Owner).
 		SetBalance(data.Balance).
 		SetCurrency(data.Currency).Save(ctx)
 	if err != nil {
 		fmt.Println(err)
-		return resp, constants.ERROR, err
+		return resp, err
 	}
-	return resp, constants.CREATED, err
+	return resp, err
 }
 
 
 // get all account
-func GetAllAccounts() ([]*ent.Accounts, constants.DBOperationStatus, error) {
+func GetAllAccounts() ([]*ent.Accounts, error) {
 	resp, err := Conn.Accounts.Query().All(ctx)
 	if err != nil {
 		fmt.Println(err)
-		return resp, constants.ERROR, err
+		return resp, err
 	}
-	return resp, constants.QUERIED, err
+	return resp, err
 }
 
 // get an account by id
-func GetAccountById(id int) (*ent.Accounts, constants.DBOperationStatus, error) {
+func GetAccountById(id int) (*ent.Accounts, error) {
 	resp, err := Conn.Accounts.Get(ctx, id)
 	if err != nil {
 		fmt.Println(err)
-		return resp, constants.ERROR, err
+		return resp, err
 	}
-	return resp, constants.QUERIED, err
+	return resp, err
 }
 
 
 // update an account by id
-func UpdateAccountBalance(id int, balance int64) (*ent.Accounts, constants.DBOperationStatus, error) {
+func UpdateAccountBalance(id int, balance int64) (*ent.Accounts, error) {
 	resp, err := Conn.Accounts.UpdateOneID(id).SetBalance(balance).Save(ctx)
 	if err != nil {
 		fmt.Println(err)
-		return resp, constants.ERROR, err
+		return resp, err
 	}
-	return resp, constants.UPDATED, err
+	return resp, err
 }
 
 
 // delete an account by id
-func DeleteAccount(id int) (constants.DBOperationStatus, error) {
+func DeleteAccount(id int) ( error) {
 	err := Conn.Accounts.DeleteOneID(id).Exec(ctx)
 	if err != nil {
 		fmt.Println(err)
-		return constants.ERROR, err
+		return err
 	}
-	return constants.DELETED, err
+	return err
 }

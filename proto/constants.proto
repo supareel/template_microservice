@@ -1,0 +1,11 @@
+syntax = "proto3";
+package account;
+option go_package = "gomicro/proto";
+
+enum DBOPERATIONSTATUS {
+	CREATED_RECORD_TO_DB = 0;
+	UPDATED_RECORD_FROM_DB = 1;
+	QUERIED_RECORD_FROM_DB = 2;
+	DELETED_RECORD_FROM_DB = 3;
+	ERROR_WHILE_SAVING_IN_DB = 4;
+}

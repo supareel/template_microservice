@@ -1,0 +1,26 @@
+syntax = "proto3";
+package account;
+option go_package = "gomicro/proto";
+
+import "proto/account_message.proto";
+import "proto/constants.proto";
+
+
+message GetAllAccountsRequest {
+  int64 val = 1;
+}
+message GetAllAccountsResponse {
+  repeated Account data = 1;
+  DBOPERATIONSTATUS status= 2;
+}
+
+message GetAccountByIdRequest {}
+message GetAccountByIdResponse {
+  Account data = 1;
+  DBOPERATIONSTATUS status= 2;
+}
+
+service AccountService {
+  rpc GetAllAccounts(GetAllAccountsRequest) returns (GetAllAccountsResponse);
+  rpc GetAccountById(GetAccountByIdRequest) returns (GetAccountByIdResponse);
+}
