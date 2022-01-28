@@ -8,10 +8,12 @@ import (
 // get all account
 func GetAllTransfers() ([]*ent.Transfers, error) {
 	tx, err := Conn.Tx(ctx)
+	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
 		return nil, err
 	}
 	resp, err := tx.Transfers.Query().All(ctx)
+	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
 		fmt.Println(err)
 		err = rollback(tx)
@@ -24,6 +26,7 @@ func GetAllTransfers() ([]*ent.Transfers, error) {
 // get an account by id
 func GetTransferById(id int) (*ent.Transfers, error) {
 	tx, err := Conn.Tx(ctx)
+	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
 		return nil, err
 	}
@@ -40,9 +43,11 @@ func GetTransferById(id int) (*ent.Transfers, error) {
 // delete an account by id
 func DeleteTransfer(id int) (error) {
 	tx, err := Conn.Tx(ctx)
+	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
 		return err
 	}
+	//pgErr, ok :=  err.(*pq.Error)
 	err = tx.Transfers.DeleteOneID(id).Exec(ctx)
 	if err != nil {
 		fmt.Println(err)
@@ -63,16 +68,19 @@ func TransferMoney(to_id int, from_id int, amount int64) (*ent.Transfers, error)
 	SetFromAccountID(from_id).
 	SetToAccountID(to_id).
 	SetAmount(amount).Save(ctx)
+	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
 		return nil, err
 	}
 
 	_, err = tx.Accounts.UpdateOneID(from_id).SetBalance(-amount).Save(ctx)
+	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
 		return nil, err
 	}
 
 	_, err = tx.Accounts.UpdateOneID(to_id).SetBalance(amount).Save(ctx)
+	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
 		return nil, err
 	}
