@@ -1,5 +1,7 @@
-postgres:
-	sudo docker stop postgres && docker rm postgres && docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+stoppg:
+	sudo docker stop postgres && docker rm postgres 
+startpg:
+	sudo docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
 
 createdb:
 	sudo docker exec -it postgres createdb --username=root --owner=root simple_bank
@@ -19,4 +21,4 @@ server:
 client:
 	go run cmd/client/main.go
 
-.PHONY: postgres createdb dropdb test protogen server client
+.PHONY: stoppg startpg createdb dropdb test protogen server client
