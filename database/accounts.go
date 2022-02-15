@@ -18,7 +18,6 @@ func CreateAccount(data *ent.Accounts) (*ent.Accounts, error) {
 	return resp, err
 }
 
-
 // get all account
 func GetAllAccounts() ([]*ent.Accounts, error) {
 	resp, err := Conn.Accounts.Query().All(ctx)
@@ -41,7 +40,6 @@ func GetAccountById(id int) (*ent.Accounts, error) {
 	return resp, err
 }
 
-
 // update an account by id
 func UpdateAccountBalance(id int, balance int64) (*ent.Accounts, error) {
 	resp, err := Conn.Accounts.UpdateOneID(id).SetBalance(balance).Save(ctx)
@@ -53,9 +51,8 @@ func UpdateAccountBalance(id int, balance int64) (*ent.Accounts, error) {
 	return resp, err
 }
 
-
 // delete an account by id
-func DeleteAccount(id int) ( error) {
+func DeleteAccount(id int) error {
 	err := Conn.Accounts.DeleteOneID(id).Exec(ctx)
 	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {

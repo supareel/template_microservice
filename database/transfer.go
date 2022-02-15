@@ -41,7 +41,7 @@ func GetTransferById(id int) (*ent.Transfers, error) {
 }
 
 // delete an account by id
-func DeleteTransfer(id int) (error) {
+func DeleteTransfer(id int) error {
 	tx, err := Conn.Tx(ctx)
 	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
@@ -58,16 +58,15 @@ func DeleteTransfer(id int) (error) {
 	return err
 }
 
-
 func TransferMoney(to_id int, from_id int, amount int64) (*ent.Transfers, error) {
 	tx, err := Conn.Tx(ctx)
 	if err != nil {
 		return nil, err
 	}
 	transaction, err := tx.Transfers.Create().
-	SetFromAccountID(from_id).
-	SetToAccountID(to_id).
-	SetAmount(amount).Save(ctx)
+		SetFromAccountID(from_id).
+		SetToAccountID(to_id).
+		SetAmount(amount).Save(ctx)
 	//pgErr, ok :=  err.(*pq.Error)
 	if err != nil {
 		return nil, err

@@ -1,9 +1,8 @@
 syntax = "proto3";
-package account;
+package proto;
 option go_package = "gomicro/proto";
 
 message Account {
-
   string owner = 1;
   int64 balance = 2;
   string currency = 3;

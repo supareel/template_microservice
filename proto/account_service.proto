@@ -1,5 +1,5 @@
 syntax = "proto3";
-package account;
+package proto;
 option go_package = "gomicro/proto";
 
 import "proto/account_message.proto";

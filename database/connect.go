@@ -16,7 +16,6 @@ import (
 var Conn *ent.Client
 var ctx = context.Background()
 
-
 func ConnectToDB() {
 	if Conn != nil {
 		return
@@ -41,11 +40,10 @@ func ConnectToDB() {
 	}
 }
 
-
 func rollback(tx *ent.Tx) error {
 	var err error = nil
 	if rerr := tx.Rollback(); rerr != nil {
-			err = fmt.Errorf("%w: %v", err, rerr)
+		err = fmt.Errorf("%w: %v", err, rerr)
 	}
 	return err
 }
