@@ -1,0 +1,11 @@
+syntax = "proto3";
+package proto;
+option go_package = "gomicro/proto";
+import "google/protobuf/timestamp.proto";
+
+message Task {
+  string name = 1;
+  string isdone = 2;
+  google.protobuf.Timestamp createdat = 3;
+  google.protobuf.Timestamp updatedat = 4;
+}

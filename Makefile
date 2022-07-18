@@ -1,20 +1,20 @@
 stoppg:
-	sudo docker stop postgres && docker rm postgres 
+	docker stop postgres && docker rm postgres 
 
 startpg:
-	sudo docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+	docker run --name postgres -p 4040:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
 
 createdb:
-	sudo docker exec -it postgres createdb --username=root --owner=root simple_bank
+	docker exec -it postgres createdb --username=root --owner=root microservice_db
 
 dropdb:
-	sudo docker exec -it postgres dropdb simple_bank
+	docker exec -it postgres dropdb microservice_db
 
 test:
 	go test -v -cover ./...
 
 protogen:
-	rm -rf ./proto/*.pb.go && protoc --go_out=./pb --go_opt=paths=source_relative --go-grpc_out=./pb --go-grpc_opt=paths=source_relative proto/*.proto
+	protoc --go_out=./proto/gen --go_opt=paths=source_relative --go-grpc_out=./proto/gen --go-grpc_opt=paths=source_relative proto/*.proto
 
 server:
 	go run cmd/server/main.go
@@ -22,4 +22,10 @@ server:
 client:
 	go run cmd/client/main.go
 
-.PHONY: stoppg startpg createdb dropdb test protogen server client
+entgen:
+	go generate ./...
+
+entinit:
+	go run entgo.io/ent/cmd/ent init [ModelName]
+
+.PHONY: stoppg startpg createdb dropdb test protogen server client entgen entinit

@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"gomicro/pb/proto"
+	"gomicro/internal/pb/proto"
 	"log"
 
 	"google.golang.org/grpc"
