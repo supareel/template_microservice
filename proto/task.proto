@@ -2,10 +2,53 @@ syntax = "proto3";
 package proto;
 option go_package = "gomicro/proto";
 import "google/protobuf/timestamp.proto";
+import "proto/constants.proto";
 
 message Task {
   string name = 1;
-  string isdone = 2;
+  bool isdone = 2;
   google.protobuf.Timestamp createdat = 3;
   google.protobuf.Timestamp updatedat = 4;
+}
+
+
+message GetAllTasksRequest {}
+message GetAllTasksResponse {
+  repeated Task data = 1;
+  DBOPERATIONSTATUS status= 2;
+}
+
+message CreateTasksRequest{
+  string name = 1;
+}
+message CreateTasksResponse{
+  Task data = 1;
+  DBOPERATIONSTATUS status= 2;
+}
+
+message GetTaskByIdRequest {
+  int32 taskId = 1;
+  DBOPERATIONSTATUS status= 2;
+}
+message GetTaskByIdResponse {
+  Task data = 1;
+  DBOPERATIONSTATUS status= 2;
+}
+
+message UpdateTaskByIdRequest {
+  int32 taskId = 1;
+  string name = 2; 
+  bool isDone = 3;
+  DBOPERATIONSTATUS status = 4;
+}
+message UpdateTaskByIdResponse {
+  bool isUpdated = 1;
+  DBOPERATIONSTATUS status= 2;
+}
+
+service TaskService {
+  rpc GetAllTasks(GetAllTasksRequest) returns (GetAllTasksResponse);
+  rpc CreateTask(CreateTasksRequest) returns (CreateTasksResponse);
+  rpc GetTaskById(GetTaskByIdRequest) returns (GetTaskByIdResponse);
+  rpc UpdateTaskById(UpdateTaskByIdRequest) returns (UpdateTaskByIdResponse);
 }

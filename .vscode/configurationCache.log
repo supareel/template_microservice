@@ -1,1 +1,1 @@
-{"buildTargets":[".PHONY","client","createdb","dropdb","entgen","entinit","protogen","server","startpg","stoppg","test"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
+{"buildTargets":[],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

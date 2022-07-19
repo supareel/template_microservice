@@ -1,14 +1,16 @@
 package taskmanager
 
 import (
-	"net/http"
+	"context"
+	"gomicro/proto/gen/proto"
 
-	"github.com/gin-gonic/gin"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // TaskHandler ...
 type TaskHandler struct {
 	svc TaskService
+	proto.UnimplementedTaskServiceServer
 }
 
 // NewTaskHandler ...
@@ -18,79 +20,74 @@ func NewTaskHandler(svc TaskService) *TaskHandler {
 	}
 }
 
-
-func (t *TaskHandler) create(c *gin.Context) {
-	var req CreateTasksRequest
-	if err := c.BindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "invalid request",
-			"hint":  "please check if task name is valid",
-		})
-		return
-	}
-
-	task, err := t.svc.Create(c.Request.Context(), req.Name)
+func (t *TaskHandler) GetAllTasks(ctx context.Context, in *proto.GetAllTasksRequest) (*proto.GetAllTasksResponse, error) {
+	tasks, err := t.svc.GetAllTask(ctx)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "create failed",
-			"hint":  "please check if task name is valid",
-		})
-		return
+		return nil, err
 	}
-	c.JSON(http.StatusCreated, gin.H{
-		"message": "",
-		"id":      task.ID,
-		"name":    task.Name,
-	})
-	return
+	newTasksResponse := proto.GetAllTasksResponse{
+		Data:   []*proto.Task{},
+		Status: proto.DBOPERATIONSTATUS_QUERIED_RECORD_FROM_DB,
+	}
+
+	for idx, task := range tasks {
+		newTasksResponse.Data[idx] = &proto.Task{
+			Isdone: task.IsDone,
+			Name:   tasks[idx].Name,
+		}
+	}
+	return &newTasksResponse, nil
 }
 
-func (t *TaskHandler) task(c *gin.Context) {
+func (t *TaskHandler) CreateTask(ctx context.Context, in *proto.CreateTasksRequest) (*proto.CreateTasksResponse, error) {
+	task, err := t.svc.Create(ctx, in.Name)
+	if err != nil {
+		return nil, err
+	}
+	taskResponse := &proto.CreateTasksResponse{
+		Data: &proto.Task{
+			Name:      task.Name,
+			Isdone:    task.IsDone,
+			Createdat: timestamppb.New(task.CreatedAt),
+			Updatedat: timestamppb.New(task.UpdatedAt),
+		},
+		Status: proto.DBOPERATIONSTATUS_CREATED_RECORD_TO_DB,
+	}
+	return taskResponse, nil
+}
 
-	id, _ := c.Params.Get("id") // NOTE: Safe to ignore error, because it's always defined.
+func (t *TaskHandler) GetTaskById(ctx context.Context, in *proto.GetTaskByIdRequest) (*proto.GetTaskByIdResponse, error) {
 
-	task, err := t.svc.Task(c.Request.Context(), id)
+	task, err := t.svc.Task(ctx, in.TaskId)
 	if err != nil {
 		// XXX: Differentiating between NotFound and Internal errors will be covered in future episodes.
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "find failed",
-			"hint":  "please check if task name is valid",
-		})
-		return
+		return nil, err
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "",
-		"id":      task.ID,
-		"name":    task.Name,
-	})
+	taskResponse := &proto.GetTaskByIdResponse{
+		Data: &proto.Task{
+			Name:      task.Name,
+			Isdone:    task.IsDone,
+			Createdat: timestamppb.New(task.CreatedAt),
+			Updatedat: timestamppb.New(task.UpdatedAt),
+		},
+		Status: proto.DBOPERATIONSTATUS_QUERIED_RECORD_FROM_DB,
+	}
+
+	return taskResponse, nil
 }
 
 // UpdateTasksRequest defines the request used for updating a task.
 
-func (t *TaskHandler) update(c *gin.Context) {
-	var req UpdateTasksRequest
-	if err := c.BindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "invalid request",
-			"hint":  "please check if task name is valid",
-		})
-		return
-	}
-
-	id, _ := c.Params.Get("id") // NOTE: Safe to ignore error, because it's always defined.
-
-	err := t.svc.Update(c.Request.Context(), id, req.Name, req.IsDone)
+func (t *TaskHandler) UpdateTaskById(ctx context.Context, in *proto.UpdateTaskByIdRequest) (*proto.UpdateTaskByIdResponse, error) {
+	err := t.svc.Update(ctx, in.TaskId, in.Name, in.IsDone)
 	if err != nil {
-		// XXX: Differentiating between NotFound and Internal errors will be covered in future episodes.
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "update failed",
-			"hint":  "please check if task name is valid",
-		})
-		return
+		return &proto.UpdateTaskByIdResponse{
+			IsUpdated: false,
+		}, err
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "update successful",
-	})
+	return &proto.UpdateTaskByIdResponse{
+		IsUpdated: true,
+	}, nil
 }

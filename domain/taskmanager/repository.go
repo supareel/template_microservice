@@ -10,9 +10,10 @@ import (
 
 // TaskRepository defines the datastore handling persisting Task records.
 type TaskRepository interface {
-	Create(ctx context.Context, name string) (TaskModel, error)
-	Find(ctx context.Context, id string) (TaskModel, error)
-	Update(ctx context.Context, id string, name string, isDone bool) error
+	FindAll(ctx context.Context)([]Task, error)
+	Create(ctx context.Context, name string) (Task, error)
+	Find(ctx context.Context, id int32) (Task, error)
+	Update(ctx context.Context, id int32, name string, isDone bool) error
 }
 
 type TaskRepo struct {
@@ -25,15 +26,43 @@ func NewPostgresRepository(db database.Database) (*TaskRepo) {
 	}
 }
 
-
-func (trp *TaskRepo) Create(ctx context.Context, name string) (TaskModel, error){ 
+func (trp *TaskRepo)	FindAll(ctx context.Context)([]Task, error) {
 	client, err := trp.db.GetClient()
+	if err != nil {
+		fmt.Println(err)
+		return []Task{}, err
+	}
+	resp, err := client.Task.Query().All(ctx)
+	if err != nil {
+		fmt.Println(err)
+		return []Task{}, err
+	}
+
+	var taskList []Task
+	for idx, task := range resp {
+		taskList[idx] = Task{
+			ID: task.ID.String(),
+			Name: task.Name,
+			IsDone: task.IsDone,
+			CreatedAt: task.CreatedAt,
+			UpdatedAt: task.UpdatedAt,
+		}
+	}
+	return taskList, err
+}
+
+func (trp *TaskRepo) Create(ctx context.Context, name string) (Task, error){ 
+	client, err := trp.db.GetClient()
+	if err != nil {
+		fmt.Println(err)
+		return Task{}, err
+	}
 	resp, err := client.Task.Create().SetID(uuid.New()).SetName(name).SetIsDone(true).Save(ctx)
 	if err != nil {
 		fmt.Println(err)
-		return TaskModel{}, err
+		return Task{}, err
 	}
-	return TaskModel{
+	return Task{
 		ID: resp.ID.String(),
 		Name: resp.Name,
 		IsDone: resp.IsDone,
@@ -41,5 +70,5 @@ func (trp *TaskRepo) Create(ctx context.Context, name string) (TaskModel, error)
 		UpdatedAt : resp.UpdatedAt,
 	}, nil
 }
-func (t *TaskRepo) Find(ctx context.Context, id string) (TaskModel, error){ return TaskModel{}, nil}
-func (t *TaskRepo) Update(ctx context.Context, id string, name string, isDone bool) error {return nil}
+func (t *TaskRepo) Find(ctx context.Context, id int32) (Task, error){ return Task{}, nil}
+func (t *TaskRepo) Update(ctx context.Context, id int32, name string, isDone bool) error {return nil}

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jul 18 13:02:41 2022
+# Make data base, printed on Tue Jul 19 15:39:39 2022
 
 # Variables
 
@@ -37,7 +37,7 @@ GOPATH = C:\Users\19man\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_3848_HOMQZVAQSLVHHPKT
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_15028_KPMEDWEKGOUESZTC
 # environment
 ONEDRIVECOMMERCIAL = C:\Users\19man\OneDrive - ZBYTE
 # environment
@@ -51,7 +51,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\19man\AppData\Roaming\Code\CachedData\b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
+VSCODE_CODE_CACHE_PATH = C:\Users\19man\AppData\Roaming\Code\CachedData\3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
 LANG = C
 # default
@@ -89,7 +89,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 3848
+VSCODE_PID = 15028
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -156,6 +156,8 @@ USERDOMAIN = DESKTOP-BBE5UD2
 GNUMAKEFLAGS := 
 # environment
 OS = Windows_NT
+# environment
+__COMPAT_LAYER = DetectorsAppHealth
 # makefile
 .DEFAULT_GOAL := stoppg
 # environment
@@ -189,7 +191,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\19man\AppData\Local\Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\958e0ca3f0ebcf40b65688519a81b06b-1.69.1-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\958e0ca3f0ebcf40b65688519a81b06b-1.69.2-main-sock
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # default
@@ -205,11 +207,12 @@ SESSIONNAME = Console
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
-PROCESSOR_REVISION = 8c01
+PRO 
+CESSOR_REVISION = 8c01
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 # variable set hash-table stats:
-# Load=98/1024=10%, Rehash=0, Collisions=7/125=6%
+# Load=99/1024=10%, Rehash=0, Collisions=7/126=6%
 
 # Pattern-specific Variable Values
 
@@ -217,9 +220,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/19man/OneDrive/Documents/go_microservice_demo, mtime 1658129270): 20 files, no impossibilities.
+# . (key c:/Users/19man/OneDrive/Documents/go_microservice_demo, mtime 1658132706): 21 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -241,7 +244,7 @@ startpg:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 5):
-	sudo docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
+	docker run --name postgres -p 4040:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
 
 client:
 #  Phony target (prerequisite of .PHONY).
@@ -254,7 +257,7 @@ client:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-18 12:55:51
+#  Last modified 2022-07-18 14:00:22
 #  File has been updated.
 #  Successfully updated.
 
@@ -264,7 +267,7 @@ dropdb:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 11):
-	sudo docker exec -it postgres dropdb simple_bank
+	docker exec -it postgres dropdb microservice_db
 
 server:
 #  Phony target (prerequisite of .PHONY).
@@ -317,7 +320,7 @@ createdb:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 8):
-	sudo docker exec -it postgres createdb --username=root --owner=root microservice_db
+	docker exec -it postgres createdb --username=root --owner=root microservice_db
 
 .PHONY: stoppg startpg createdb dropdb test protogen server client entgen entinit
 #  Implicit rule search has not been done.
@@ -330,8 +333,7 @@ stoppg:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 2):
-	sudo docker stop pos 
-tgres && docker rm postgres 
+	docker stop postgres && docker rm postgres 
 
 # files hash-table stats:
 # Load=15/1024=1%, Rehash=0, Collisions=0/35=0%
@@ -341,12 +343,13 @@ tgres && docker rm postgres
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 34 / storage = 258 B / avg = 7 B
-# current buf: size = 8174 B / used = 258 B / count = 34 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 35 / storage = 262 B / avg = 7 B
+# current buf: size = 8174 B / used = 262 B / count = 35 / avg = 7 B
 
-# strcache performance: lookups = 59 / hit rate = 42%
+# strcache performance: lookups = 60 / hit rate = 41%
 # hash-table stats:
-# Load=34/8192=0%, Rehash=0, Collisions=0/59=0%
-# Finished Make data base on Mon Jul 18 13:02:41 2022
+# Load=35/8192=0%, Rehash=0, Collisions=0/60=0%
+# Finished Ma 
+ke data base on Tue Jul 19 15:39:39 2022
 
  
