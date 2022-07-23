@@ -8,10 +8,12 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jul 20 16:39:55 2022
+# Make data base, printed on Sat Jul 23 09:54:26 2022
 
 # Variables
 
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -37,9 +39,11 @@ GOPATH = C:\Users\19man\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_7716_LFYLRHEQBQKLBEKT
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5136_XUGBZZKBRXZZVZXB
 # environment
 ONEDRIVECOMMERCIAL = C:\Users\19man\OneDrive - ZBYTE
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -89,7 +93,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 7716
+VSCODE_PID = 5136
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -119,7 +123,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Program Files\GitHub CLI\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Users\19man\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\CMake\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\19man\.cargo\bin;C:\Users\19man\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\19man\AppData\Local\Programs\Python\Python310\;C:\Users\19man\AppData\Local\Microsoft\WindowsApps;C:\Users\19man\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\19man\go\bin;C:\Users\19man\AppData\Roaming\npm;C:\Users\19man\.azure-kubectl;C:\Users\19man\.azure-kubelogin;C:\Users\19man\Downloads\sqlite-tools-win32-x86-3380200;C:\Program Files\OpenSSL-Win64\bin;C:\Program Files\heroku\bin;C:\ProgramData\19man\GitHubDesktop\bin;C:\Users\19man\AppData\Local\GitHubDesktop\bin;C:\Users\19man\AppData\Local\Programs\Azure Data Studio\bin;C:\Users\19man\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\protoc\bin;
+PATH = C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Go\bin;C:\Program Files\GitHub CLI\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Users\19man\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\CMake\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\;C:\atlas-windows-amd64-latest.exe;C:\Program Files\Amazon\AWSCLIV2\;C:\Users\19man\.cargo\bin;C:\Users\19man\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\19man\AppData\Local\Programs\Python\Python310\;C:\Users\19man\AppData\Local\Microsoft\WindowsApps;C:\Users\19man\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\19man\go\bin;C:\Users\19man\AppData\Roaming\npm;C:\Users\19man\.azure-kubectl;C:\Users\19man\.azure-kubelogin;C:\Users\19man\Downloads\sqlite-tools-win32-x86-3380200;C:\Program Files\OpenSSL-Win64\bin;C:\Program Files\heroku\bin;C:\ProgramData\19man\GitHubDesktop\bin;C:\Users\19man\AppData\Local\GitHubDesktop\bin;C:\Users\19man\AppData\Local\Programs\Azure Data Studio\bin;C:\Users\19man\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\protoc\bin;C:\atlas-windows-amd64-latest.exe;C:\;
 # environment
 ZES_ENABLE_SYSMAN = 1
 # environment
@@ -209,7 +213,7 @@ PROCESSOR_REVISION = 8c01
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 # variable set hash-table stats:
-# Load=98/1024=10%, Rehash=0, Collisions=7/125=6%
+# Load=100/1024=10%, Rehash=0, Collisions=8/127=6%
 
 # Pattern-specific Variable Values
 
@@ -217,9 +221,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/19man/OneDrive/Documents/go_microservice_demo, mtime 1658225813): 20 files, no impossibilities.
+# . (key c:/Users/19man/OneDrive/Documents/go_microservice_demo, mtime 1658337563): 22 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -303,8 +307,7 @@ entinit:
 #  recipe to execute (from 'Makefile', line 29):
 	go run entgo.io/ent/cmd/ent init [ModelName]
 
-proto 
-gen:
+protogen:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -341,12 +344,12 @@ stoppg:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 34 / storage = 258 B / avg = 7 B
-# current buf: size = 8174 B / used = 258 B / count = 34 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 36 / storage = 281 B / avg = 7 B
+# current buf: size = 8174 B / used = 281 B / count = 36 / avg = 7 B
 
-# strcache performance: lookups = 59 / hit rate = 42%
+# strcache performance: lookups = 61 / hit rate = 40%
 # hash-table stats:
-# Load=34/8192=0%, Rehash=0, Collisions=0/59=0%
-# Finished Make data base on Wed Jul 20 16:39:55 2022
+# Load=36/8192=0%, Rehash=0, Collisions=0/61=0%
+# Finished Make data base on Sat Jul 23 09:54:26 2022
 
  
