@@ -1,21 +1,23 @@
 syntax = "proto3";
 package proto;
-option go_package = "gomicro/proto";
+option go_package = ".";
 import "google/protobuf/timestamp.proto";
-import "proto/constants.proto";
+import "constants.proto";
+
+import "google/api/annotations.proto";
 
 message Task {
-  string name = 1;
-  bool isdone = 2;
-  google.protobuf.Timestamp createdat = 3;
-  google.protobuf.Timestamp updatedat = 4;
+  string name = 2;
+  bool isdone = 3;
+  google.protobuf.Timestamp createdat = 4;
+  google.protobuf.Timestamp updatedat = 5;
 }
 
 
 message GetAllTasksRequest {}
 message GetAllTasksResponse {
-  repeated Task data = 1;
-  DBOPERATIONSTATUS status= 2;
+  repeated Task data = 6;
+  DBOPERATIONSTATUS status= 7;
 }
 
 message CreateTasksRequest{
@@ -47,7 +49,11 @@ message UpdateTaskByIdResponse {
 }
 
 service TaskService {
-  rpc GetAllTasks(GetAllTasksRequest) returns (GetAllTasksResponse);
+  rpc GetAllTasks(GetAllTasksRequest) returns (GetAllTasksResponse){
+    option (google.api.http) = {
+      get: "/v1/tasks"
+    };
+  };
   rpc CreateTask(CreateTasksRequest) returns (CreateTasksResponse);
   rpc GetTaskById(GetTaskByIdRequest) returns (GetTaskByIdResponse);
   rpc UpdateTaskById(UpdateTaskByIdRequest) returns (UpdateTaskByIdResponse);

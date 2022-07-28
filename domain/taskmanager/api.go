@@ -2,7 +2,7 @@ package taskmanager
 
 import (
 	"context"
-	"gomicro/proto/gen/proto"
+	proto "gomicro/pkg/proto"
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -26,16 +26,18 @@ func (t *TaskHandler) GetAllTasks(ctx context.Context, in *proto.GetAllTasksRequ
 		return nil, err
 	}
 	newTasksResponse := proto.GetAllTasksResponse{
-		Data:   []*proto.Task{},
-		Status: proto.DBOPERATIONSTATUS_QUERIED_RECORD_FROM_DB,
+		Data:   make([]*proto.Task, len(tasks)),
+		Status: proto.DBOPERATIONSTATUS_QUERIED,
 	}
+
 
 	for idx, task := range tasks {
 		newTasksResponse.Data[idx] = &proto.Task{
+			Name:   task.Name,
 			Isdone: task.IsDone,
-			Name:   tasks[idx].Name,
 		}
 	}
+
 	return &newTasksResponse, nil
 }
 
@@ -51,7 +53,7 @@ func (t *TaskHandler) CreateTask(ctx context.Context, in *proto.CreateTasksReque
 			Createdat: timestamppb.New(task.CreatedAt),
 			Updatedat: timestamppb.New(task.UpdatedAt),
 		},
-		Status: proto.DBOPERATIONSTATUS_CREATED_RECORD_TO_DB,
+		Status: proto.DBOPERATIONSTATUS_CREATED,
 	}
 	return taskResponse, nil
 }
@@ -71,7 +73,7 @@ func (t *TaskHandler) GetTaskById(ctx context.Context, in *proto.GetTaskByIdRequ
 			Createdat: timestamppb.New(task.CreatedAt),
 			Updatedat: timestamppb.New(task.UpdatedAt),
 		},
-		Status: proto.DBOPERATIONSTATUS_QUERIED_RECORD_FROM_DB,
+		Status: proto.DBOPERATIONSTATUS_QUERIED,
 	}
 
 	return taskResponse, nil

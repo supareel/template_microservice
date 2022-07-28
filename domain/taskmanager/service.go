@@ -3,13 +3,14 @@ package taskmanager
 import (
 	"context"
 	"fmt"
+	"gomicro/ent"
 )
 
 // business logic
 
 // TaskService ...
 type TaskService interface {
-	GetAllTask(ctx context.Context) ([]Task, error)
+	GetAllTask(ctx context.Context) ([]*ent.Task, error)
 	Create(ctx context.Context, name string) (Task, error)
 	Task(ctx context.Context, id int32) (Task, error)
 	Update(ctx context.Context, id int32, name string, isDone bool) error
@@ -27,22 +28,13 @@ func NewTaskService(repo TaskRepository) *TaskSvc {
 	}
 }
 
-func (t *TaskSvc) GetAllTask(ctx context.Context) ([]Task, error) {
+func (t *TaskSvc) GetAllTask(ctx context.Context) ([]*ent.Task, error) {
 	tasks, err := t.repo.FindAll(ctx)
 	if err != nil {
-		return []Task{}, fmt.Errorf("repo create: %w", err)
+		return []*ent.Task{}, fmt.Errorf("repo create: %w", err)
 	}
 
-	var allTask []Task
-
-	for idx, task := range tasks {
-		allTask[idx] = Task{
-			ID:   task.ID,
-			Name: task.Name,
-		}
-	}
-
-	return allTask, nil
+	return tasks, nil
 }
 
 // Create stores a new record.

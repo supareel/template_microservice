@@ -7,7 +7,7 @@ import (
 )
 
 type EnvConfiguration struct {
-	APP_PORT string
+	APP_PORT int
   DB_USERNAME string
   DB_PASS string
   DB_SERVER string
@@ -20,15 +20,22 @@ type EnvConfiguration struct {
 var EnvConfig EnvConfiguration
 
 func LoadEnvConfig() {
-	EnvConfig.APP_PORT = os.Getenv("APP_PORT")
-  EnvConfig.DB_USERNAME = os.Getenv("DB_USERNAME")
-  EnvConfig.DB_PASS = os.Getenv("DB_PASS")
-  EnvConfig.DB_SERVER = os.Getenv("DB_SERVER")
-  port, err := strconv.ParseInt(os.Getenv("DB_PORT"), 10, 32)
+  appport, err := strconv.ParseInt(os.Getenv("APP_PORT"), 10, 32)
   if err != nil {
     log.Fatalf("\nUnable to parse port value :: %s\nRecieved value :: %s\n", err, os.Getenv("DB_PORT"))
   }
-  EnvConfig.DB_PORT = int(port)
+  dbport, err := strconv.ParseInt(os.Getenv("DB_PORT"), 10, 32)
+  if err != nil {
+    log.Fatalf("\nUnable to parse port value :: %s\nRecieved value :: %s\n", err, os.Getenv("DB_PORT"))
+  }
+  // --------------------------------------------------------------------------------------
+  // --------------------------------------------------------------------------------------
+	EnvConfig.APP_PORT = int(appport)
+  EnvConfig.DB_USERNAME = os.Getenv("DB_USERNAME")
+  EnvConfig.DB_PASS = os.Getenv("DB_PASS")
+  EnvConfig.DB_SERVER = os.Getenv("DB_SERVER")
+  
+  EnvConfig.DB_PORT = int(dbport)
   EnvConfig.DB_NAME = os.Getenv("DB_NAME")
   EnvConfig.DB_SSL = os.Getenv("DB_SSL")
   EnvConfig.GIN_MODE = os.Getenv("GIN_MODE")

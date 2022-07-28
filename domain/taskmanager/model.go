@@ -1,9 +1,13 @@
 package taskmanager
 
-import "time"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type Task struct {
-	ID        string
+	ID        uuid.UUID
 	Name      string
 	IsDone    bool
 	CreatedAt time.Time

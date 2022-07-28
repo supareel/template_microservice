@@ -1,11 +1,11 @@
 syntax = "proto3";
 package proto;
-option go_package = "gomicro/proto";
+option go_package = ".";
 
 enum DBOPERATIONSTATUS {
-	QUERIED_RECORD_FROM_DB = 0;
-	CREATED_RECORD_TO_DB = 1;
-	UPDATED_RECORD_FROM_DB = 2;
-	DELETED_RECORD_FROM_DB = 3;
-	ERROR_WHILE_SAVING_IN_DB = 5;
+	QUERIED = 0;
+	CREATED = 1;
+	UPDATED = 2;
+	DELETED = 3;
+	ERROR = 5;
 }

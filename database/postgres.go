@@ -27,10 +27,18 @@ type Database struct {
 }
 
 func (db *Database) GetClient() (*ent.Client, error) {
-	if db != nil {
-		return db.client, errors.New("Database already instanciated")
+	if db == nil {
+		return db.client, errors.New("Database not instanciated")
 	}
 	return db.client, nil
+}
+
+// create schema in db
+func (db *Database) CloseClient() {
+	// run migration
+	if err := db.client.Close(); err != nil {
+		log.Fatal(err)
+	}
 }
 
 // create schema in db

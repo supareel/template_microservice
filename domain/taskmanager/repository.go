@@ -4,13 +4,15 @@ import (
 	"context"
 	"fmt"
 	"gomicro/database"
+	"gomicro/ent"
+	"gomicro/pkg"
 
 	"github.com/google/uuid"
 )
 
 // TaskRepository defines the datastore handling persisting Task records.
 type TaskRepository interface {
-	FindAll(ctx context.Context)([]Task, error)
+	FindAll(ctx context.Context)([]*ent.Task, error)
 	Create(ctx context.Context, name string) (Task, error)
 	Find(ctx context.Context, id int32) (Task, error)
 	Update(ctx context.Context, id int32, name string, isDone bool) error
@@ -26,29 +28,19 @@ func NewPostgresRepository(db database.Database) (*TaskRepo) {
 	}
 }
 
-func (trp *TaskRepo)	FindAll(ctx context.Context)([]Task, error) {
+func (trp *TaskRepo)	FindAll(ctx context.Context)([]*ent.Task, error) {
 	client, err := trp.db.GetClient()
 	if err != nil {
 		fmt.Println(err)
-		return []Task{}, err
+		return []*ent.Task{}, err
 	}
 	resp, err := client.Task.Query().All(ctx)
 	if err != nil {
-		fmt.Println(err)
-		return []Task{}, err
+		pkg.FancyHandleError(err)
+		return []*ent.Task{}, err
 	}
 
-	var taskList []Task
-	for idx, task := range resp {
-		taskList[idx] = Task{
-			ID: task.ID.String(),
-			Name: task.Name,
-			IsDone: task.IsDone,
-			CreatedAt: task.CreatedAt,
-			UpdatedAt: task.UpdatedAt,
-		}
-	}
-	return taskList, err
+	return resp, err
 }
 
 func (trp *TaskRepo) Create(ctx context.Context, name string) (Task, error){ 
@@ -63,7 +55,7 @@ func (trp *TaskRepo) Create(ctx context.Context, name string) (Task, error){
 		return Task{}, err
 	}
 	return Task{
-		ID: resp.ID.String(),
+		ID: resp.ID,
 		Name: resp.Name,
 		IsDone: resp.IsDone,
 		CreatedAt : resp.CreatedAt,

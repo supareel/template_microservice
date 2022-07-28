@@ -7,6 +7,9 @@ startpg:
 createdb:
 	docker exec -it postgres createdb --username=root --owner=root microservice_db
 
+createtable:
+	go run .\cmd\migrate\migrate.go
+
 dropdb:
 	docker exec -it postgres dropdb microservice_db
 
@@ -14,13 +17,13 @@ test:
 	go test -v -cover ./...
 
 protogen:
-	protoc --go_out=./proto/gen --go_opt=paths=source_relative --go-grpc_out=./proto/gen --go-grpc_opt=paths=source_relative proto/*.proto
+	cd proto && buf generate
 
 server:
-	go run cmd/server/main.go
+	go run cmd/server/server.go
 
 client:
-	go run cmd/client/main.go
+	go run cmd/client/client.go
 
 entgen:
 	go generate ./...
