@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jul 28 19:34:12 2022
+# Make data base, printed on Fri Jul 29 07:53:42 2022
 
 # Variables
 
@@ -37,7 +37,7 @@ GOPATH = C:\Users\19man\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_8888_BFULKUAZHMYRGADT
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_24996_LIAUKGQDLHAKZCGZ
 # environment
 ONEDRIVECOMMERCIAL = C:\Users\19man\OneDrive - ZBYTE
 # environment
@@ -89,7 +89,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 8888
+VSCODE_PID = 24996
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -232,7 +232,7 @@ entgen:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 26):
+#  recipe to execute (from 'Makefile', line 29):
 	go generate ./...
 
 startpg:
@@ -248,22 +248,29 @@ client:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 23):
-	go run cmd/client/main.go
+#  recipe to execute (from 'Makefile', line 26):
+	go run cmd/client/client.go
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-28 17:37:39
+#  Last modified 2022-07-28 21:46:07
 #  File has been updated.
 #  Successfully updated.
+
+createtable:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 11):
+	go run .\cmd\migrate\migrate.go
 
 dropdb:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 11):
+#  recipe to execute (from 'Makefile', line 14):
 	docker exec -it postgres dropdb microservice_db
 
 server:
@@ -271,7 +278,7 @@ server:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 20):
+#  recipe to execute (from 'Makefile', line 23):
 	go run cmd/server/server.go
 
 # Not a target:
@@ -291,17 +298,17 @@ test:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 14):
+#  File 
+ has not been updated.
+#  recipe to execute (from 'Makefile', line 17):
 	go test -v -cover ./...
 
 entinit:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
-#  File does not  
-exist.
+#  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 29):
+#  recipe to execute (from 'Makefile', line 32):
 	go run entgo.io/ent/cmd/ent init [ModelName]
 
 protogen:
@@ -309,7 +316,7 @@ protogen:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 17):
+#  recipe to execute (from 'Makefile', line 20):
 	cd proto && buf generate
 
 createdb:
@@ -317,8 +324,7 @@ createdb:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  re 
-cipe to execute (from 'Makefile', line 8):
+#  recipe to execute (from 'Makefile', line 8):
 	docker exec -it postgres createdb --username=root --owner=root microservice_db
 
 .PHONY: stoppg startpg createdb dropdb test protogen server client entgen entinit
@@ -335,20 +341,19 @@ stoppg:
 	docker stop postgres && docker rm postgres 
 
 # files hash-table stats:
-# Load=15/1024=1%, Rehash=0, Collisions=0/35=0%
+# Load=16/1024=2%, Rehash=0, Collisions=0/36=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 37 / storage = 282 B / avg = 7 B
-# current buf: size = 8174 B / used = 282 B / count = 37 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 38 / storage = 294 B / avg = 7 B
+# current buf: size = 8174 B / used = 294 B / count = 38 / avg = 7 B
 
-# strcache performance: lookups = 62 / hit rate = 40%
+# strcache performance: lookups = 64 / hit rate = 40%
 # hash-table stats:
-# Load=37/8192=0%, Rehash=0, Collisions=0/62=0%
-# Finished Make data base on Thu J 
-ul 28 19:34:12 2022
+# Load=38/8192=0%, Rehash=0, Collisions=0/64=0%
+# Finished Make data base on Fri Jul 29 07:53:42 2022
 
  
