@@ -76,17 +76,6 @@
         }
       }
     },
-    "protoGetTaskByIdResponse": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "$ref": "#/definitions/protoTask"
-        },
-        "status": {
-          "$ref": "#/definitions/protoDBOPERATIONSTATUS"
-        }
-      }
-    },
     "protoTask": {
       "type": "object",
       "properties": {
@@ -103,17 +92,6 @@
         "updatedat": {
           "type": "string",
           "format": "date-time"
-        }
-      }
-    },
-    "protoUpdateTaskByIdResponse": {
-      "type": "object",
-      "properties": {
-        "isUpdated": {
-          "type": "boolean"
-        },
-        "status": {
-          "$ref": "#/definitions/protoDBOPERATIONSTATUS"
         }
       }
     },

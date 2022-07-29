@@ -57,39 +57,3 @@ func (t *TaskHandler) CreateTask(ctx context.Context, in *proto.CreateTasksReque
 	}
 	return taskResponse, nil
 }
-
-func (t *TaskHandler) GetTaskById(ctx context.Context, in *proto.GetTaskByIdRequest) (*proto.GetTaskByIdResponse, error) {
-
-	task, err := t.svc.Task(ctx, in.TaskId)
-	if err != nil {
-		// XXX: Differentiating between NotFound and Internal errors will be covered in future episodes.
-		return nil, err
-	}
-
-	taskResponse := &proto.GetTaskByIdResponse{
-		Data: &proto.Task{
-			Name:      task.Name,
-			Isdone:    task.IsDone,
-			Createdat: timestamppb.New(task.CreatedAt),
-			Updatedat: timestamppb.New(task.UpdatedAt),
-		},
-		Status: proto.DBOPERATIONSTATUS_QUERIED,
-	}
-
-	return taskResponse, nil
-}
-
-// UpdateTasksRequest defines the request used for updating a task.
-
-func (t *TaskHandler) UpdateTaskById(ctx context.Context, in *proto.UpdateTaskByIdRequest) (*proto.UpdateTaskByIdResponse, error) {
-	err := t.svc.Update(ctx, in.TaskId, in.Name, in.IsDone)
-	if err != nil {
-		return &proto.UpdateTaskByIdResponse{
-			IsUpdated: false,
-		}, err
-	}
-
-	return &proto.UpdateTaskByIdResponse{
-		IsUpdated: true,
-	}, nil
-}

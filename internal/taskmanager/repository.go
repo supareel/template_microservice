@@ -14,8 +14,6 @@ import (
 type TaskRepository interface {
 	FindAll(ctx context.Context)([]*ent.Task, error)
 	Create(ctx context.Context, name string) (Task, error)
-	Find(ctx context.Context, id int32) (Task, error)
-	Update(ctx context.Context, id int32, name string, isDone bool) error
 }
 
 type TaskRepo struct {
@@ -62,5 +60,3 @@ func (trp *TaskRepo) Create(ctx context.Context, name string) (Task, error){
 		UpdatedAt : resp.UpdatedAt,
 	}, nil
 }
-func (t *TaskRepo) Find(ctx context.Context, id int32) (Task, error){ return Task{}, nil}
-func (t *TaskRepo) Update(ctx context.Context, id int32, name string, isDone bool) error {return nil}

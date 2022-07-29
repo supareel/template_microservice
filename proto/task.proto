@@ -28,26 +28,6 @@ message CreateTasksResponse{
   DBOPERATIONSTATUS status= 2;
 }
 
-message GetTaskByIdRequest {
-  int32 taskId = 1;
-  DBOPERATIONSTATUS status= 2;
-}
-message GetTaskByIdResponse {
-  Task data = 1;
-  DBOPERATIONSTATUS status= 2;
-}
-
-message UpdateTaskByIdRequest {
-  int32 taskId = 1;
-  string name = 2; 
-  bool isDone = 3;
-  DBOPERATIONSTATUS status = 4;
-}
-message UpdateTaskByIdResponse {
-  bool isUpdated = 1;
-  DBOPERATIONSTATUS status= 2;
-}
-
 service TaskService {
   rpc GetAllTasks(GetAllTasksRequest) returns (GetAllTasksResponse){
     option (google.api.http) = {
@@ -55,6 +35,4 @@ service TaskService {
     };
   };
   rpc CreateTask(CreateTasksRequest) returns (CreateTasksResponse);
-  rpc GetTaskById(GetTaskByIdRequest) returns (GetTaskByIdResponse);
-  rpc UpdateTaskById(UpdateTaskByIdRequest) returns (UpdateTaskByIdResponse);
 }

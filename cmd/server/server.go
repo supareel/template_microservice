@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gomicro/config"
 	"gomicro/database"
-	"gomicro/domain/taskmanager"
+	"gomicro/internal/taskmanager"
 	"gomicro/pkg"
 	proto "gomicro/pkg/proto"
 	"log"

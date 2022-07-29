@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jul 29 07:53:42 2022
+# Make data base, printed on Fri Jul 29 07:58:40 2022
 
 # Variables
 
@@ -179,8 +179,6 @@ NVM_SYMLINK = C:\Program Files\nodejs
 # environment
 PROCESSOR_ARCHITECTURE = x86
 # environment
-GOMODCACHE = C:\Users\19man\go\pkg\mod
-# environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
@@ -190,8 +188,6 @@ ELECTRON_RUN_AS_NODE = 1
 TEMP = C:\Users\19man\AppData\Local\Temp
 # environment
 VSCODE_IPC_HOOK = \\.\pipe\958e0ca3f0ebcf40b65688519a81b06b-1.69.2-main-sock
-# environment
-GOPROXY = https://proxy.golang.org,direct
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -209,7 +205,7 @@ PROCESSOR_REVISION = 8c01
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 # variable set hash-table stats:
-# Load=98/1024=10%, Rehash=0, Collisions=7/125=6%
+# Load=96/1024=9%, Rehash=0, Collisions=7/123=6%
 
 # Pattern-specific Variable Values
 
@@ -217,9 +213,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/19man/OneDrive/Documents/go_microservice_demo, mtime 1659013872): 23 files, no impossibilities.
+# . (key c:/Users/19man/OneDrive/Documents/go_microservice_demo, mtime 1659061483): 22 files, no impossibilities.
 
-# 23 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -298,8 +294,7 @@ test:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
-#  File 
- has not been updated.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 17):
 	go test -v -cover ./...
 
@@ -348,12 +343,12 @@ stoppg:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 38 / storage = 294 B / avg = 7 B
-# current buf: size = 8174 B / used = 294 B / count = 38 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 37 / storage = 290 B / avg = 7 B
+# current buf: size = 8174 B / used = 290 B / count = 37 / avg = 7 B
 
-# strcache performance: lookups = 64 / hit rate = 40%
+# strcache performance: lookups = 63 / hit rate = 41%
 # hash-table stats:
-# Load=38/8192=0%, Rehash=0, Collisions=0/64=0%
-# Finished Make data base on Fri Jul 29 07:53:42 2022
+# Load=37/8192=0%, Rehash=0, Collisions=0/63=0%
+# Finished Make data base on Fri Jul 29 07:58:40 2022
 
  

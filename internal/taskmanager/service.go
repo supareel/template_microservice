@@ -12,8 +12,6 @@ import (
 type TaskService interface {
 	GetAllTask(ctx context.Context) ([]*ent.Task, error)
 	Create(ctx context.Context, name string) (Task, error)
-	Task(ctx context.Context, id int32) (Task, error)
-	Update(ctx context.Context, id int32, name string, isDone bool) error
 }
 
 // Task defines the application service in charge of interacting with Tasks.
@@ -49,28 +47,4 @@ func (t *TaskSvc) Create(ctx context.Context, name string) (Task, error) {
 		ID:   task.ID,
 		Name: task.Name,
 	}, nil
-}
-
-// Task gets an existing Task from the datastore.
-func (t *TaskSvc) Task(ctx context.Context, id int32) (Task, error) {
-	// XXX: We will revisit the number of received arguments in future episodes.
-	task, err := t.repo.Find(ctx, id)
-	if err != nil {
-		return Task{}, fmt.Errorf("repo find: %w", err)
-	}
-
-	return Task{
-		ID:   task.ID,
-		Name: task.Name,
-	}, nil
-}
-
-// Update updates an existing Task in the datastore.
-func (t *TaskSvc) Update(ctx context.Context, id int32, name string, isDone bool) error {
-	// XXX: We will revisit the number of received arguments in future episodes.
-	if err := t.repo.Update(ctx, id, name, isDone); err != nil {
-		return fmt.Errorf("repo update: %w", err)
-	}
-
-	return nil
 }

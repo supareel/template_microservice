@@ -24,8 +24,6 @@ const _ = grpc.SupportPackageIsVersion7
 type TaskServiceClient interface {
 	GetAllTasks(ctx context.Context, in *GetAllTasksRequest, opts ...grpc.CallOption) (*GetAllTasksResponse, error)
 	CreateTask(ctx context.Context, in *CreateTasksRequest, opts ...grpc.CallOption) (*CreateTasksResponse, error)
-	GetTaskById(ctx context.Context, in *GetTaskByIdRequest, opts ...grpc.CallOption) (*GetTaskByIdResponse, error)
-	UpdateTaskById(ctx context.Context, in *UpdateTaskByIdRequest, opts ...grpc.CallOption) (*UpdateTaskByIdResponse, error)
 }
 
 type taskServiceClient struct {
@@ -54,32 +52,12 @@ func (c *taskServiceClient) CreateTask(ctx context.Context, in *CreateTasksReque
 	return out, nil
 }
 
-func (c *taskServiceClient) GetTaskById(ctx context.Context, in *GetTaskByIdRequest, opts ...grpc.CallOption) (*GetTaskByIdResponse, error) {
-	out := new(GetTaskByIdResponse)
-	err := c.cc.Invoke(ctx, "/proto.TaskService/GetTaskById", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *taskServiceClient) UpdateTaskById(ctx context.Context, in *UpdateTaskByIdRequest, opts ...grpc.CallOption) (*UpdateTaskByIdResponse, error) {
-	out := new(UpdateTaskByIdResponse)
-	err := c.cc.Invoke(ctx, "/proto.TaskService/UpdateTaskById", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // TaskServiceServer is the server API for TaskService service.
 // All implementations must embed UnimplementedTaskServiceServer
 // for forward compatibility
 type TaskServiceServer interface {
 	GetAllTasks(context.Context, *GetAllTasksRequest) (*GetAllTasksResponse, error)
 	CreateTask(context.Context, *CreateTasksRequest) (*CreateTasksResponse, error)
-	GetTaskById(context.Context, *GetTaskByIdRequest) (*GetTaskByIdResponse, error)
-	UpdateTaskById(context.Context, *UpdateTaskByIdRequest) (*UpdateTaskByIdResponse, error)
 	mustEmbedUnimplementedTaskServiceServer()
 }
 
@@ -92,12 +70,6 @@ func (UnimplementedTaskServiceServer) GetAllTasks(context.Context, *GetAllTasksR
 }
 func (UnimplementedTaskServiceServer) CreateTask(context.Context, *CreateTasksRequest) (*CreateTasksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTask not implemented")
-}
-func (UnimplementedTaskServiceServer) GetTaskById(context.Context, *GetTaskByIdRequest) (*GetTaskByIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTaskById not implemented")
-}
-func (UnimplementedTaskServiceServer) UpdateTaskById(context.Context, *UpdateTaskByIdRequest) (*UpdateTaskByIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateTaskById not implemented")
 }
 func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
 
@@ -148,42 +120,6 @@ func _TaskService_CreateTask_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TaskService_GetTaskById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTaskByIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TaskServiceServer).GetTaskById(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/proto.TaskService/GetTaskById",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskServiceServer).GetTaskById(ctx, req.(*GetTaskByIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaskService_UpdateTaskById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateTaskByIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TaskServiceServer).UpdateTaskById(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/proto.TaskService/UpdateTaskById",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaskServiceServer).UpdateTaskById(ctx, req.(*UpdateTaskByIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // TaskService_ServiceDesc is the grpc.ServiceDesc for TaskService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -198,14 +134,6 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateTask",
 			Handler:    _TaskService_CreateTask_Handler,
-		},
-		{
-			MethodName: "GetTaskById",
-			Handler:    _TaskService_GetTaskById_Handler,
-		},
-		{
-			MethodName: "UpdateTaskById",
-			Handler:    _TaskService_UpdateTaskById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
