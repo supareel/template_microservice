@@ -14,7 +14,7 @@ dropdb:
 	docker exec -it postgres dropdb microservice_db
 
 test:
-	go test -v -cover ./...
+	go test -v -cover ./internal/... ./database/... ./util/...
 
 protogen:
 	cd proto && buf generate
