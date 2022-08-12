@@ -1,5 +1,5 @@
-make.exe --dry-run --always-make --keep-going --print-directory
-make: Entering directory 'c:/Users/19man/OneDrive/Documents/go_microservice_demo'
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/sourabh/Documents/bitsofmandal/template_microservice'
 docker stop postgres && docker rm postgres 
-make: Leaving directory 'c:/Users/19man/OneDrive/Documents/go_microservice_demo'
+make: Leaving directory '/home/sourabh/Documents/bitsofmandal/template_microservice'
  
