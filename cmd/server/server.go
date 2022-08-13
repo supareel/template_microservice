@@ -15,7 +15,6 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-
 func main() {
 	godotenv.Load(".env.development")
 	config.LoadEnvConfig()
@@ -34,7 +33,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 	reflection.Register(grpcServer)
 	proto.RegisterTaskServiceServer(grpcServer, taskRouter)
-	endpoint := fmt.Sprintf(":%d",config.EnvConfig.APP_PORT)
+	endpoint := fmt.Sprintf(":%d", config.EnvConfig.APP_PORT)
 	listener, err := net.Listen("tcp", endpoint)
 	if err != nil {
 		log.Fatal(err)

@@ -12,7 +12,7 @@ import (
 
 // TaskRepository defines the datastore handling persisting Task records.
 type TaskRepository interface {
-	FindAll(ctx context.Context)([]*ent.Task, error)
+	FindAll(ctx context.Context) ([]*ent.Task, error)
 	Create(ctx context.Context, name string) (Task, error)
 }
 
@@ -20,13 +20,13 @@ type TaskRepo struct {
 	db database.Database
 }
 
-func NewPostgresRepository(db database.Database) (*TaskRepo) {
+func NewPostgresRepository(db database.Database) *TaskRepo {
 	return &TaskRepo{
 		db: db,
 	}
 }
 
-func (trp *TaskRepo)	FindAll(ctx context.Context)([]*ent.Task, error) {
+func (trp *TaskRepo) FindAll(ctx context.Context) ([]*ent.Task, error) {
 	client, err := trp.db.GetClient()
 	if err != nil {
 		fmt.Println(err)
@@ -41,7 +41,7 @@ func (trp *TaskRepo)	FindAll(ctx context.Context)([]*ent.Task, error) {
 	return resp, err
 }
 
-func (trp *TaskRepo) Create(ctx context.Context, name string) (Task, error){ 
+func (trp *TaskRepo) Create(ctx context.Context, name string) (Task, error) {
 	client, err := trp.db.GetClient()
 	if err != nil {
 		fmt.Println(err)
@@ -53,10 +53,10 @@ func (trp *TaskRepo) Create(ctx context.Context, name string) (Task, error){
 		return Task{}, err
 	}
 	return Task{
-		ID: resp.ID,
-		Name: resp.Name,
-		IsDone: resp.IsDone,
-		CreatedAt : resp.CreatedAt,
-		UpdatedAt : resp.UpdatedAt,
+		ID:        resp.ID,
+		Name:      resp.Name,
+		IsDone:    resp.IsDone,
+		CreatedAt: resp.CreatedAt,
+		UpdatedAt: resp.UpdatedAt,
 	}, nil
 }
