@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Aug 12 16:22:04 2022
+# Make data base, printed on Sat Aug 13 09:41:00 2022
 
 # Variables
 
@@ -77,7 +77,7 @@ PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/sourabhmandal:@/tmp/.ICE-unix/1725,unix/sourabhmandal:/tmp/.ICE-unix/1725
+SESSION_MANAGER = local/sourabhmandal:@/tmp/.ICE-unix/1746,unix/sourabhmandal:/tmp/.ICE-unix/1746
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -97,7 +97,7 @@ XDG_SESSION_DESKTOP = cinnamon
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 114733
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2434
 # automatic
 %F = $(notdir $%)
 # environment
@@ -111,7 +111,7 @@ QT_QPA_PLATFORMTHEME = qt5ct
 # environment
 XDG_SEAT = seat0
 # environment
-SSH_AGENT_PID = 1795
+SSH_AGENT_PID = 1815
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = X-Cinnamon
 # environment
@@ -205,7 +205,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 114733
+VSCODE_PID = 2434
 # variable set hash-table stats:
 # Load=98/1024=10%, Rehash=0, Collisions=7/123=6%
 
@@ -215,9 +215,9 @@ VSCODE_PID = 114733
 
 # Directories
 
-# . (device 57, inode 1982062): 22 files, no impossibilities.
+# . (device 58, inode 1982062): 21 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -279,6 +279,9 @@ test:
 createdb:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 8):
@@ -326,9 +329,6 @@ dropdb:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
-make: *** No rule to make target 'all'.  Stop.
-
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 14):
 	docker exec -it postgres dropdb microservice_db
@@ -348,12 +348,12 @@ createtable:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 39 / storage = 322 B / avg = 8 B
-# current buf: size = 8162 B / used = 322 B / count = 39 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 38 / storage = 301 B / avg = 7 B
+# current buf: size = 8162 B / used = 301 B / count = 38 / avg = 7 B
 
-# strcache performance: lookups = 65 / hit rate = 40%
+# strcache performance: lookups = 64 / hit rate = 40%
 # hash-table stats:
-# Load=39/8192=0%, Rehash=0, Collisions=2/65=3%
-# Finished Make data base on Fri Aug 12 16:22:04 2022
+# Load=38/8192=0%, Rehash=0, Collisions=2/64=3%
+# Finished Make data base on Sat Aug 13 09:41:00 2022
 
  
