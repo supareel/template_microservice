@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	connectTo := "127.0.0.1:7005"
+		connectTo := "127.0.0.1:7005"
 	conn, err := grpc.Dial(connectTo, grpc.WithBlock(), grpc.WithInsecure())
 	if err != nil {
 		fmt.Errorf("failed to connect to PetStoreService on %s: %w", connectTo, err)
