@@ -30,7 +30,6 @@ func (t *TaskHandler) GetAllTasks(ctx context.Context, in *proto.GetAllTasksRequ
 		Status: proto.DBOPERATIONSTATUS_QUERIED,
 	}
 
-
 	for idx, task := range tasks {
 		newTasksResponse.Data[idx] = &proto.Task{
 			Name:   task.Name,

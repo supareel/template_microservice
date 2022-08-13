@@ -55,8 +55,8 @@ func NewPostgresClient(
 	dbUsername string, dbPass string, dbServer string, dbName string,
 	dbSsl string, dbPort int, dbTimeout int8) (Database, error) {
 	var db Database
-		db.timeout = time.Duration(dbTimeout)
-		db.database = fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s", dbUsername, dbPass, dbServer, dbPort, dbName, dbSsl)
+	db.timeout = time.Duration(dbTimeout)
+	db.database = fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s", dbUsername, dbPass, dbServer, dbPort, dbName, dbSsl)
 	fmt.Printf("\nDATABASE URL : %s\n\n", db.database)
 	if db.client != nil {
 		return db, nil

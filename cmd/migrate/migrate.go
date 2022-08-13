@@ -17,5 +17,5 @@ func main() {
 		pkg.FancyHandleError(err)
 	}
 	db.MigrateDB(40)
-  defer db.CloseClient()
+	defer db.CloseClient()
 }
