@@ -1,3 +1,5 @@
+setup:
+	make setup/setup
 stoppg:
 	docker stop postgres && docker rm postgres 
 
