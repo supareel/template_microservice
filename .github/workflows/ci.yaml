@@ -45,9 +45,6 @@ jobs:
     - name: Start Postgres in docker
       run: make startpg
 
-    - name: Top Postgres in docker
-      run: make stoppg
-
     - name: Create test database
       run: make createdb
 
