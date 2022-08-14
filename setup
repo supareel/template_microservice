@@ -1,0 +1,4 @@
+#!/bin/sh
+git config core.hooksPath .githooks
+ROOT=$(pwd) 
+echo "SET HOOKS PATH to ::> $ROOT/.githooks"
