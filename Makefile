@@ -1,5 +1,5 @@
 setup:
-	make setup/setup
+	./setup/setup
 stoppg:
 	docker stop postgres && docker rm postgres 
 
@@ -33,4 +33,4 @@ entgen:
 entinit:
 	go run entgo.io/ent/cmd/ent init [ModelName]
 
-.PHONY: stoppg startpg createdb dropdb test protogen server client entgen entinit
+.PHONY: setup stoppg startpg createdb dropdb test protogen server client entgen entinit

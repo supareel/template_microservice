@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Aug 13 09:41:00 2022
+# Make data base, printed on Sun Aug 14 13:24:59 2022
 
 # Variables
 
@@ -69,23 +69,21 @@ VSCODE_CWD = /home/sourabh
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session4
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/usr/local/go/bin
+PATH = /home/sourabh/.local/bin:/home/sourabh/bin:/home/sourabh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/sourabh/bin:/home/sourabh/bin:/usr/local/go/bin
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/sourabhmandal:@/tmp/.ICE-unix/1746,unix/sourabhmandal:/tmp/.ICE-unix/1746
+SESSION_MANAGER = local/sourabhmandal:@/tmp/.ICE-unix/45946,unix/sourabhmandal:/tmp/.ICE-unix/45946
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GOPATH = /home/sourabh/go
 # environment
 ELECTRON_RUN_AS_NODE = 1
-# environment
-KUBECONFIG = /home/sourabh/.kube/zbyte-cluster-reader.kubeconfig
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -97,7 +95,7 @@ XDG_SESSION_DESKTOP = cinnamon
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2434
+GIO_LAUNCHED_DESKTOP_FILE_PID = 66802
 # automatic
 %F = $(notdir $%)
 # environment
@@ -111,7 +109,7 @@ QT_QPA_PLATFORMTHEME = qt5ct
 # environment
 XDG_SEAT = seat0
 # environment
-SSH_AGENT_PID = 1815
+SSH_AGENT_PID = 46017
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = X-Cinnamon
 # environment
@@ -145,11 +143,11 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 0
 # environment
-XDG_SESSION_ID = c2
+XDG_SESSION_ID = c10
 # environment
 USER = sourabh
 # makefile
-.DEFAULT_GOAL := stoppg
+.DEFAULT_GOAL := setup
 # environment
 XDG_CURRENT_DESKTOP = X-Cinnamon
 # automatic
@@ -205,9 +203,9 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2434
+VSCODE_PID = 66802
 # variable set hash-table stats:
-# Load=98/1024=10%, Rehash=0, Collisions=7/123=6%
+# Load=97/1024=9%, Rehash=0, Collisions=7/122=6%
 
 # Pattern-specific Variable Values
 
@@ -215,15 +213,23 @@ VSCODE_PID = 2434
 
 # Directories
 
-# . (device 58, inode 1982062): 21 files, no impossibilities.
+# . (device 57, inode 1982062): 22 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
+
+setup:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 2):
+	./setup/setup
 
 # Not a target:
 all:
@@ -237,7 +243,7 @@ client:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 26):
+#  recipe to execute (from 'Makefile', line 28):
 	go run cmd/client/client.go
 
 stoppg:
@@ -245,10 +251,10 @@ stoppg:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 2):
+#  recipe to execute (from 'Makefile', line 4):
 	docker stop postgres && docker rm postgres 
 
-.PHONY: stoppg startpg createdb dropdb test protogen server client entgen entinit
+.PHONY: setup stoppg startpg createdb dropdb test protogen server client entgen entinit
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -256,7 +262,7 @@ stoppg:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-12 16:21:50.365587171
+#  Last modified 2022-08-14 07:39:02.000816595
 #  File has been updated.
 #  Successfully updated.
 
@@ -265,7 +271,7 @@ server:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 23):
+#  recipe to execute (from 'Makefile', line 25):
 	go run cmd/server/server.go
 
 test:
@@ -273,18 +279,18 @@ test:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 17):
+ 
+make: *** No rule to make target 'all'.  Stop.
+
+#  recipe to execute (from 'Makefile', line 19):
 	go test -v -cover ./internal/... ./database/... ./util/...
 
 createdb:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
- 
-make: *** No rule to make target 'all'.  Stop.
-
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 8):
+#  recipe to execute (from 'Makefile', line 10):
 	docker exec -it postgres createdb --username=root --owner=root microservice_db
 
 protogen:
@@ -292,7 +298,7 @@ protogen:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 20):
+#  recipe to execute (from 'Makefile', line 22):
 	cd proto && buf generate
 
 startpg:
@@ -300,7 +306,7 @@ startpg:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 5):
+#  recipe to execute (from 'Makefile', line 7):
 	docker run --name postgres -p 4040:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
 
 entinit:
@@ -308,7 +314,7 @@ entinit:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 32):
+#  recipe to execute (from 'Makefile', line 34):
 	go run entgo.io/ent/cmd/ent init [ModelName]
 
 entgen:
@@ -316,7 +322,7 @@ entgen:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 29):
+#  recipe to execute (from 'Makefile', line 31):
 	go generate ./...
 
 # Not a target:
@@ -330,30 +336,30 @@ dropdb:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 14):
+#  recipe to execute (from 'Makefile', line 16):
 	docker exec -it postgres dropdb microservice_db
 
 createtable:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 11):
+#  recipe to execute (from 'Makefile', line 13):
 	go run .\cmd\migrate\migrate.go
 
 # files hash-table stats:
-# Load=16/1024=2%, Rehash=0, Collisions=0/36=0%
+# Load=17/1024=2%, Rehash=0, Collisions=0/38=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 38 / storage = 301 B / avg = 7 B
-# current buf: size = 8162 B / used = 301 B / count = 38 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 39 / storage = 307 B / avg = 7 B
+# current buf: size = 8162 B / used = 307 B / count = 39 / avg = 7 B
 
-# strcache performance: lookups = 64 / hit rate = 40%
+# strcache performance: lookups = 68 / hit rate = 42%
 # hash-table stats:
-# Load=38/8192=0%, Rehash=0, Collisions=2/64=3%
-# Finished Make data base on Sat Aug 13 09:41:00 2022
+# Load=39/8192=0%, Rehash=0, Collisions=2/68=3%
+# Finished Make data base on Sun Aug 14 13:24:59 2022
 
  
