@@ -37,10 +37,28 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.17
+        go-version: 1.19
 
-    - name: Docker
-      run: docker ps 
+    - name: Docker Container
+      run: docker ps
+
+    - name: Start Postgres in docker
+      run: make startpg
+
+    - name: Top Postgres in docker
+      run: make stoppg
+
+    - name: Create test database
+      run: make createdb
+
+    - name: Create test tables
+      run: make createtable
       
-    - name: Test
+    - name: Run all Test
       run: make test
+
+    - name: Delete database
+      run: make dropdb
+
+    - name: Delete postgres
+      run: make stoppg
