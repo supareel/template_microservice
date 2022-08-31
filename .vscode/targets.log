@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Aug 14 13:24:59 2022
+# Make data base, printed on Wed Aug 31 21:55:14 2022
 
 # Variables
 
@@ -35,7 +35,7 @@ GDMSESSION = cinnamon
 # default
 MAKE_VERSION := 4.2.1
 # makefile
-CURDIR := /home/sourabh/Documents/bitsofmandal/template_microservice
+CURDIR := /home/sourabh/Documents/template_microservice
 # makefile
 SHELL = /bin/sh
 # environment
@@ -54,6 +54,8 @@ MAKEFILE_LIST :=  Makefile
 @F = $(notdir $@)
 # environment
 GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
+# environment
+GO111MODULE = on
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -69,21 +71,23 @@ VSCODE_CWD = /home/sourabh
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session4
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/sourabh/.local/bin:/home/sourabh/bin:/home/sourabh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/sourabh/bin:/home/sourabh/bin:/usr/local/go/bin
+PATH = /usr/local/go/bin:/home/sourabh/.local/bin:/home/sourabh/bin:/home/sourabh/.local/bin:/home/sourabh/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/sourabh/bin:/home/sourabh/go/bin
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/sourabhmandal:@/tmp/.ICE-unix/45946,unix/sourabhmandal:/tmp/.ICE-unix/45946
+SESSION_MANAGER = local/sourabhmandal:@/tmp/.ICE-unix/1589,unix/sourabhmandal:/tmp/.ICE-unix/1589
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GOPATH = /home/sourabh/go
 # environment
 ELECTRON_RUN_AS_NODE = 1
+# environment
+KUBECONFIG = /home/sourabh/.kube/zbyte-cluster-reader.kubeconfig
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -95,13 +99,13 @@ XDG_SESSION_DESKTOP = cinnamon
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 66802
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2330
 # automatic
 %F = $(notdir $%)
 # environment
 DISPLAY = :0
 # environment
-PWD = /home/sourabh/Documents/bitsofmandal/template_microservice
+PWD = /home/sourabh/Documents/template_microservice
 # environment
 QT_QPA_PLATFORMTHEME = qt5ct
 # default
@@ -109,7 +113,7 @@ QT_QPA_PLATFORMTHEME = qt5ct
 # environment
 XDG_SEAT = seat0
 # environment
-SSH_AGENT_PID = 46017
+SSH_AGENT_PID = 1658
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = X-Cinnamon
 # environment
@@ -121,11 +125,11 @@ HOME = /home/sourabh
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
-VSCODE_CODE_CACHE_PATH = /home/sourabh/.config/Code/CachedData/6d9b74a70ca9c7733b29f0456fd8195364076dda
+VSCODE_CODE_CACHE_PATH = /home/sourabh/.config/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 LOGNAME = sourabh
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # environment
@@ -143,13 +147,15 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 0
 # environment
-XDG_SESSION_ID = c10
+XDG_SESSION_ID = c2
 # environment
 USER = sourabh
 # makefile
 .DEFAULT_GOAL := setup
 # environment
 XDG_CURRENT_DESKTOP = X-Cinnamon
+# environment
+GOROOT = /usr/local/go
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
@@ -163,7 +169,7 @@ LANGUAGE = en_IN:en
 # environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-1ebc1a52-1.70.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-1ebc1a52-1.70.2-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -203,9 +209,9 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 66802
+VSCODE_PID = 2330
 # variable set hash-table stats:
-# Load=97/1024=9%, Rehash=0, Collisions=7/122=6%
+# Load=100/1024=10%, Rehash=0, Collisions=7/125=6%
 
 # Pattern-specific Variable Values
 
@@ -213,7 +219,7 @@ VSCODE_PID = 66802
 
 # Directories
 
-# . (device 57, inode 1982062): 22 files, no impossibilities.
+# . (device 58, inode 1575171): 22 files, no impossibilities.
 
 # 22 files, no impossibilities in 1 directories.
 
@@ -262,7 +268,7 @@ stoppg:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-14 07:39:02.000816595
+#  Last modified 2022-08-31 21:54:33.796807772
 #  File has been updated.
 #  Successfully updated.
 
@@ -279,9 +285,6 @@ test:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
- 
-make: *** No rule to make target 'all'.  Stop.
-
 #  recipe to execute (from 'Makefile', line 19):
 	go test -v -cover ./internal/... ./database/... ./util/...
 
@@ -327,6 +330,9 @@ entgen:
 
 # Not a target:
 .DEFAULT:
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -354,12 +360,12 @@ createtable:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 39 / storage = 307 B / avg = 7 B
-# current buf: size = 8162 B / used = 307 B / count = 39 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 39 / storage = 313 B / avg = 8 B
+# current buf: size = 8162 B / used = 313 B / count = 39 / avg = 8 B
 
 # strcache performance: lookups = 68 / hit rate = 42%
 # hash-table stats:
 # Load=39/8192=0%, Rehash=0, Collisions=2/68=3%
-# Finished Make data base on Sun Aug 14 13:24:59 2022
+# Finished Make data base on Wed Aug 31 21:55:14 2022
 
  

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"gomicro/config"
 	"gomicro/database"
@@ -9,9 +10,12 @@ import (
 	proto "gomicro/pkg/proto"
 	"log"
 	"net"
+	"net/http"
 
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -33,17 +37,48 @@ func main() {
 	grpcServer := grpc.NewServer()
 	reflection.Register(grpcServer)
 	proto.RegisterTaskServiceServer(grpcServer, taskRouter)
-	endpoint := fmt.Sprintf(":%d", config.EnvConfig.APP_PORT)
-	listener, err := net.Listen("tcp", endpoint)
-	if err != nil {
-		log.Fatal(err)
-	}
+	grpcEndpoint := fmt.Sprintf(":%d", config.EnvConfig.GRPC_PORT)
 
+	
 	// run grpc
-	fmt.Printf("Running gRPC Server on => %s\n", endpoint)
-	err = grpcServer.Serve(listener)
-
+	go func() {
+		proto.RegisterTaskServiceServer(grpcServer, taskRouter)
+		listener, err := net.Listen("tcp", grpcEndpoint)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("Running gRPC Server on => %s\n", grpcEndpoint)
+		err = grpcServer.Serve(listener)
+		if err != nil {
+			log.Fatal("Cannot Start GRPC Server : ", err)
+		}
+	}()
+	
+	// run http
+	// Start HTTP server (and proxy calls to gRPC server endpoint)
+	conn, err := grpc.DialContext(
+		context.Background(),
+		grpcEndpoint,
+		grpc.WithBlock(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
 	if err != nil {
-		log.Fatal("Cannot Start Server : ", err)
+		log.Fatalln("Failed to dial server:", err)
 	}
+
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+	mux := runtime.NewServeMux()
+	proto.RegisterTaskServiceHandler(ctx, mux, conn)
+	if err != nil {
+		log.Fatalln("Failed to register gateway:", err)
+	}
+
+	httpEndpoint := fmt.Sprintf(":%d", config.EnvConfig.HTTP_PORT)
+	log.Printf("Serving gRPC-Gateway on http://0.0.0.0%s\n", httpEndpoint)
+	if err = http.ListenAndServe(httpEndpoint, mux); err != nil {
+		log.Fatal("Cannot Start HTTP Proxy Server : ", err)
+	}
+
 }

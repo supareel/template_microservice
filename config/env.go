@@ -7,7 +7,8 @@ import (
 )
 
 type EnvConfiguration struct {
-	APP_PORT    int
+	GRPC_PORT    int
+	HTTP_PORT int
 	DB_USERNAME string
 	DB_PASS     string
 	DB_SERVER   string
@@ -20,7 +21,11 @@ type EnvConfiguration struct {
 var EnvConfig EnvConfiguration
 
 func LoadEnvConfig() {
-	appport, err := strconv.ParseInt(os.Getenv("APP_PORT"), 10, 32)
+	grpc_port, err := strconv.ParseInt(os.Getenv("GRPC_PORT"), 10, 32)
+	if err != nil {
+		log.Fatalf("\nUnable to parse port value :: %s\nRecieved value :: %s\n", err, os.Getenv("DB_PORT"))
+	}
+	http_port, err := strconv.ParseInt(os.Getenv("HTTP_PORT"), 10, 32)
 	if err != nil {
 		log.Fatalf("\nUnable to parse port value :: %s\nRecieved value :: %s\n", err, os.Getenv("DB_PORT"))
 	}
@@ -30,7 +35,8 @@ func LoadEnvConfig() {
 	}
 	// --------------------------------------------------------------------------------------
 	// --------------------------------------------------------------------------------------
-	EnvConfig.APP_PORT = int(appport)
+	EnvConfig.GRPC_PORT = int(grpc_port)
+	EnvConfig.HTTP_PORT = int(http_port)
 	EnvConfig.DB_USERNAME = os.Getenv("DB_USERNAME")
 	EnvConfig.DB_PASS = os.Getenv("DB_PASS")
 	EnvConfig.DB_SERVER = os.Getenv("DB_SERVER")
