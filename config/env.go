@@ -7,24 +7,21 @@ import (
 )
 
 type EnvConfiguration struct {
-	GRPC_PORT    int
-	HTTP_PORT int
-	DB_USERNAME string
-	DB_PASS     string
-	DB_SERVER   string
-	DB_PORT     int
-	DB_NAME     string
-	DB_SSL      string
-	GIN_MODE    string
+	HTTP_PORT             int
+	DB_USERNAME           string
+	DB_PASS               string
+	DB_SERVER             string
+	DB_PORT               int
+	DB_NAME               string
+	DB_SSL                string
+	GIN_MODE              string
+	TOKEN_SYMMETRIC_KEY   string
+	ACCESS_TOKEN_DURATION string
 }
 
 var EnvConfig EnvConfiguration
 
 func LoadEnvConfig() {
-	grpc_port, err := strconv.ParseInt(os.Getenv("GRPC_PORT"), 10, 32)
-	if err != nil {
-		log.Fatalf("\nUnable to parse port value :: %s\nRecieved value :: %s\n", err, os.Getenv("DB_PORT"))
-	}
 	http_port, err := strconv.ParseInt(os.Getenv("HTTP_PORT"), 10, 32)
 	if err != nil {
 		log.Fatalf("\nUnable to parse port value :: %s\nRecieved value :: %s\n", err, os.Getenv("DB_PORT"))
@@ -35,7 +32,6 @@ func LoadEnvConfig() {
 	}
 	// --------------------------------------------------------------------------------------
 	// --------------------------------------------------------------------------------------
-	EnvConfig.GRPC_PORT = int(grpc_port)
 	EnvConfig.HTTP_PORT = int(http_port)
 	EnvConfig.DB_USERNAME = os.Getenv("DB_USERNAME")
 	EnvConfig.DB_PASS = os.Getenv("DB_PASS")
@@ -45,4 +41,7 @@ func LoadEnvConfig() {
 	EnvConfig.DB_NAME = os.Getenv("DB_NAME")
 	EnvConfig.DB_SSL = os.Getenv("DB_SSL")
 	EnvConfig.GIN_MODE = os.Getenv("GIN_MODE")
+	EnvConfig.ACCESS_TOKEN_DURATION = os.Getenv("ACCESS_TOKEN_DURATION")
+	EnvConfig.TOKEN_SYMMETRIC_KEY = os.Getenv("TOKEN_SYMMETRIC_KEY")
+
 }

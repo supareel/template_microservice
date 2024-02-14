@@ -25,12 +25,13 @@ func main() {
 		pkg.FancyHandleError(err)
 	}
 	defer db.CloseClient()
+
 	// repository
 	repo := taskmanager.NewPostgresRepository(db)
 	taskApi := taskmanager.NewTaskApi(repo)
 	taskmanager_gen.RegisterHandlers(router, taskApi)
-	// start server
 
+	// start server
 	httpEndpoint := fmt.Sprintf(":%d", config.EnvConfig.HTTP_PORT)
 	if err = router.Run(httpEndpoint); err != nil {
 		log.Fatal("Cannot Start HTTP Server : ", err)
