@@ -1,3 +1,6 @@
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+current_dir := $(patsubst %/,%,$(dir $(mkfile_path)))
+
 setup:
 	./setup/setup
 stoppg:
@@ -18,19 +21,17 @@ dropdb:
 test:
 	go test -v -cover ./internal/... ./database/... ./util/...
 
-protogen:
-	cd proto && buf generate
-
 server:
 	go run cmd/server/server.go
 
 client:
 	go run cmd/client/client.go
 
-entgen:
-	go generate ./...
-
-entinit:
-	go run entgo.io/ent/cmd/ent init [ModelName]
+api-server:
+	go run github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen --config=$(current_dir)/server.gen.yaml $(current_dir)/task.yaml
+api-client:
+	go run github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen --config=$(current_dir)/client.gen.yaml $(current_dir)/task.yaml
+api-types:
+	go run github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen --config=$(current_dir)/types.gen.yaml $(current_dir)/task.yaml
 
 .PHONY: setup stoppg startpg createdb dropdb test protogen server client entgen entinit

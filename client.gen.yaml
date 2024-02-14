@@ -1,0 +1,4 @@
+package: taskmanager_gen
+generate:
+  - client
+output: "internal/taskmanager/_generated_/client.go"

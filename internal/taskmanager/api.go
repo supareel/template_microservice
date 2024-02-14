@@ -1,58 +1,44 @@
 package taskmanager
 
 import (
-	"context"
-	proto "gomicro/pkg/proto"
+	taskmanager_gen "gomicro/internal/taskmanager/_generated_"
 
-	"google.golang.org/protobuf/types/known/timestamppb"
+	"github.com/gin-gonic/gin"
 )
 
-// TaskHandler ...
-type TaskHandler struct {
-	svc TaskService
-	proto.UnimplementedTaskServiceServer
+// Task defines the application service in charge of interacting with Tasks.
+type TaskApi struct {
+	repo TaskRepository
 }
 
-// NewTaskHandler ...
-func NewTaskHandler(svc TaskService) *TaskHandler {
-	return &TaskHandler{
-		svc: svc,
+// NewTask ...
+func NewTaskApi(repo TaskRepository) *TaskApi {
+	return &TaskApi{
+		repo: repo,
 	}
 }
 
-func (t *TaskHandler) GetAllTasks(ctx context.Context, in *proto.GetAllTasksRequest) (*proto.GetAllTasksResponse, error) {
-	tasks, err := t.svc.GetAllTask(ctx)
-	if err != nil {
-		return nil, err
-	}
-	newTasksResponse := proto.GetAllTasksResponse{
-		Data:   make([]*proto.Task, len(tasks)),
-		Status: proto.DBOPERATIONSTATUS_QUERIED,
-	}
-
-	for idx, task := range tasks {
-		newTasksResponse.Data[idx] = &proto.Task{
-			Name:   task.Name,
-			Isdone: task.IsDone,
-		}
-	}
-
-	return &newTasksResponse, nil
+// AddTask implements the AddTask method of ServerInterface
+func (s *TaskApi) AddTask(c *gin.Context) {
+	// Your implementation for adding a task
 }
 
-func (t *TaskHandler) CreateTask(ctx context.Context, in *proto.CreateTasksRequest) (*proto.CreateTasksResponse, error) {
-	task, err := t.svc.Create(ctx, in.Name)
-	if err != nil {
-		return nil, err
-	}
-	taskResponse := &proto.CreateTasksResponse{
-		Data: &proto.Task{
-			Name:      task.Name,
-			Isdone:    task.IsDone,
-			Createdat: timestamppb.New(task.CreatedAt),
-			Updatedat: timestamppb.New(task.UpdatedAt),
-		},
-		Status: proto.DBOPERATIONSTATUS_CREATED,
-	}
-	return taskResponse, nil
+// DeleteTask implements the DeleteTask method of ServerInterface
+func (s *TaskApi) DeleteTask(c *gin.Context, id int64) {
+	// Your implementation for deleting a task by ID
+}
+
+// FindTaskById implements the FindTaskById method of ServerInterface
+func (s *TaskApi) FindTaskById(c *gin.Context, id int64) {
+	// Your implementation for finding a task by ID
+}
+
+// UpdateTask implements the UpdateTask method of ServerInterface
+func (s *TaskApi) UpdateTask(c *gin.Context, id int64) {
+	// Your implementation for updating a task by ID
+}
+
+// GetAllTasks implements the GetAllTasks method of ServerInterface
+func (s *TaskApi) GetAllTasks(c *gin.Context, params taskmanager_gen.GetAllTasksParams) {
+	// Your implementation for getting all tasks
 }

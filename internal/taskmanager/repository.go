@@ -13,7 +13,7 @@ import (
 // TaskRepository defines the datastore handling persisting Task records.
 type TaskRepository interface {
 	FindAll(ctx context.Context) ([]*ent.Task, error)
-	Create(ctx context.Context, name string) (Task, error)
+	Create(ctx context.Context, name string) (ent.Task, error)
 }
 
 type TaskRepo struct {
@@ -41,22 +41,17 @@ func (trp *TaskRepo) FindAll(ctx context.Context) ([]*ent.Task, error) {
 	return resp, err
 }
 
-func (trp *TaskRepo) Create(ctx context.Context, name string) (Task, error) {
+func (trp *TaskRepo) Create(ctx context.Context, name string) (ent.Task, error) {
 	client, err := trp.db.GetClient()
 	if err != nil {
 		fmt.Println(err)
-		return Task{}, err
+		return ent.Task{}, err
 	}
 	resp, err := client.Task.Create().SetID(uuid.New()).SetName(name).SetIsDone(true).Save(ctx)
 	if err != nil {
 		fmt.Println(err)
-		return Task{}, err
+		return ent.Task{}, err
 	}
-	return Task{
-		ID:        resp.ID,
-		Name:      resp.Name,
-		IsDone:    resp.IsDone,
-		CreatedAt: resp.CreatedAt,
-		UpdatedAt: resp.UpdatedAt,
-	}, nil
+
+	return *resp, nil
 }
