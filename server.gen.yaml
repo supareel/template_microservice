@@ -1,5 +1,0 @@
-package: taskmanager_gen
-generate:
-  - gin-server
-  - types
-output: "internal/taskmanager/_generated_/server.go"
