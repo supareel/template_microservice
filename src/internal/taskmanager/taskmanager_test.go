@@ -4,6 +4,7 @@ import (
 	"context"
 	"gomicro/src/database"
 	"gomicro/src/internal/taskmanager"
+	taskmanager_gen "gomicro/src/internal/taskmanager/_generated_"
 	"path/filepath"
 	"testing"
 	"time"
@@ -39,18 +40,17 @@ func TestTaskManagerRepository(t *testing.T) {
 
 	connStr, err := pgContainer.ConnectionString(ctx, "sslmode=disable")
 	assert.NoError(t, err)
-	database.NewPostgresClient()
-	customerRepo, err := taskmanager.NewPostgresRepository(ctx, connStr)
+	db := database.NewPostgresClient()
+	taskRepo, err := taskmanager.NewPostgresRepository(db)
 	assert.NoError(t, err)
 
-	c, err := customerRepo.CreateCustomer(ctx, Customer{
-		Name:  "Henry",
-		Email: "henry@gmail.com",
+	c, err := taskRepo.CreateCustomer(ctx, taskmanager_gen.Task{
+		Name: "Henry",
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, c)
 
-	customer, err := customerRepo.GetCustomerByEmail(ctx, "henry@gmail.com")
+	customer, err := taskRepo.GetCustomerByEmail(ctx, "henry@gmail.com")
 	assert.NoError(t, err)
 	assert.NotNil(t, customer)
 	assert.Equal(t, "Henry", customer.Name)
