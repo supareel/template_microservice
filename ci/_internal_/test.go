@@ -1,4 +1,4 @@
-package main
+package ci
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"dagger.io/dagger"
 )
 
-func test(ctx context.Context, client *dagger.Client) error {
+func Test(ctx context.Context, client *dagger.Client) error {
 	fmt.Println("Building with Dagger")
 
 	// expose host service on port 3306

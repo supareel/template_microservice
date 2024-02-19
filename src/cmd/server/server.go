@@ -20,7 +20,13 @@ func main() {
 	router := gin.Default()
 
 	// connect to DB
-	db, err := database.NewPostgresClient(config.EnvConfig.DB_USERNAME, config.EnvConfig.DB_PASS, config.EnvConfig.DB_SERVER, config.EnvConfig.DB_NAME, config.EnvConfig.DB_SSL, config.EnvConfig.DB_PORT, 30)
+	db, err := database.NewPostgresClient(
+		config.EnvConfig.DB_USERNAME,
+		config.EnvConfig.DB_PASS,
+		config.EnvConfig.DB_SERVER,
+		config.EnvConfig.DB_NAME,
+		config.EnvConfig.DB_SSL,
+		config.EnvConfig.DB_PORT, 30)
 	if err != nil {
 		pkg.FancyHandleError(err)
 	}
