@@ -12,6 +12,11 @@ jobs:
   auto-pull-request:
     name: Create or update draft pull request
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: read
+      packages: none
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -28,11 +33,6 @@ jobs:
       - name: Create or update pull request
         id: create-pr
         uses: peter-evans/create-pull-request@v3
-        permissions:
-          contents: write
-          pull-requests: write
-          issues: read
-          packages: none
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
