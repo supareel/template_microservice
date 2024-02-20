@@ -2,26 +2,13 @@ name: golangci-lint
 on:
   push:
     branches:
-      - 'main'
-      - 'ci'
-    tags:
-      - v*
-
+      - "main"
+      - "ci"
   pull_request:
+    - "main"
+    - "ci"
 permissions:
   contents: read
-  # Optional: allow read access to pull request. Use with `only-new-issues` option.
-  # pull-requests: read
-jobs:
-  name: Dagger CI
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   lint:
@@ -32,7 +19,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version: '>=1.20'
+          go-version: ">=1.20"
       - name: Dagger
         uses: dagger/dagger-action@v1
         with:
