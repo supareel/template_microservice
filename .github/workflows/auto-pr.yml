@@ -36,7 +36,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          base: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Auto-generated draft PR"
           title: "${{ github.ref_name }}: Merge into main"
@@ -47,7 +46,7 @@ jobs:
 
             Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
           draft: true
-          branch: ${{ github.head_ref }}
+          branch: main
           labels: "auto-generated"
           delete-branch: true
           assignees: ${{ github.actor }}
