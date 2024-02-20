@@ -33,7 +33,7 @@ func Build(ctx context.Context, client *dagger.Client) error {
 		WithLabel("org.opencontainers.image.licenses", "MIT").
 		WithDirectory("/src", project).
 		WithWorkdir("/src").
-		WithServiceBinding("db", hostSrv).
+		WithServiceBinding("builder", hostSrv).
 		WithEnvVariable("CGO_ENABLED", "0").
 		WithExec([]string{"go", "build", "-o", path, serverEntrypoint})
 
@@ -42,7 +42,7 @@ func Build(ctx context.Context, client *dagger.Client) error {
 		WithFile(path, builder.File(serverEntrypoint)).
 		WithEntrypoint([]string{path}).WithExposedPort(7001)
 
-	addr, err := prodImage.Publish(ctx, "hub.docker.io/multistage")
+	addr, err := prodImage.Publish(ctx, "https://hub.docker.com/foxbat007/test_ms:0.0.1")
 	if err != nil {
 		panic(err)
 	}
