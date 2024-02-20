@@ -7,8 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
     branches:
-    - 'main'
-    - 'ci'
+      - "ignore-main"
+      - "ignore-ci"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -29,11 +29,11 @@ jobs:
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: ""                                 # If blank, default: triggered branch
-          destination_branch: "master"                      # If blank, default: master
+          source_branch: "" # If blank, default: triggered branch
+          destination_branch: "master" # If blank, default: master
           pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
-          pr_body: ":crown: *An automated PR*"              # Full markdown support, requires pr_title to be set
-          pr_template: ".github/pull_request_template.md"      # Path to pull request template, requires pr_title to be set, excludes pr_body
-          pr_draft: true                                    # Creates pull request as draft
-          pr_allow_empty: true                              # Creates pull request even if there are no changes
+          pr_body: ":crown: *An automated PR*" # Full markdown support, requires pr_title to be set
+          pr_template: ".github/pull_request_template.md" # Path to pull request template, requires pr_title to be set, excludes pr_body
+          pr_draft: true # Creates pull request as draft
+          pr_allow_empty: true # Creates pull request even if there are no changes
           github_token: ${{ secrets.GITHUB_TOKEN }}
