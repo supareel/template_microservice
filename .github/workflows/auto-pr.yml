@@ -13,7 +13,7 @@ jobs:
     name: Create or update draft pull request
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       pull-requests: write
       issues: read
       packages: none
