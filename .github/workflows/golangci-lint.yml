@@ -25,15 +25,19 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    
-    - name: Install Dagger CLI
-      run: |
-        curl -sSL https://get.dagger.io/cli.sh | bash
-        sudo mv dagger /usr/local/bin/
-
-    - name: Run Dagger lint command
-      run: dagger run go run ci/main.go -lint
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '>=1.20'
+      - name: Dagger
+        uses: dagger/dagger-action@v1
+        with:
+          age-key: ${{ secrets.DAGGER_AGE_KEY }}
+          args: up -e gcpcloudrun
+      - name: Install Dagger CLI
+        run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
+      - name: Run Dagger lint command
+        run: dagger run go run ci/main.go -lint
