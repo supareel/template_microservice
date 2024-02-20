@@ -20,14 +20,10 @@ jobs:
         with:
           go-version: ">=1.20"
       - name: Dagger
-        uses: dagger/dagger-action@v1
+        uses: dagger/dagger-for-github@v5
         with:
-          age-key: ${{ secrets.DAGGER_AGE_KEY }}
-          args: up -e gcpcloudrun
-      - name: Install Dagger CLI
-        run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
-      - name: Run Dagger lint command
-        run: dagger run go run ci/main.go -lint
+          verb: run
+          args: go run ci/main.go -lint
   test:
     runs-on: ubuntu-latest
 
