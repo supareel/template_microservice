@@ -1,75 +1,89 @@
-name: ci-test
+name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [main, ci]
   pull_request:
-    branches: [main]
+    branches: [main, ci]
     paths-ignore:
       - "**/*.md"
       - "**/*.txt"
 
 jobs:
-  lint:
+  lint_and_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
           go-version: ">=1.20"
-      - name: Dagger
+
+      - name: Dagger lint
         uses: dagger/dagger-for-github@v5
         with:
           verb: run
           args: go run ci/main.go -lint
-  test:
-    runs-on: ubuntu-latest
 
-    services:
-      # Label used to access the service container
-      postgres:
-        image: postgres:12-alpine
-        # Provide the password for postgres
-        env:
-          POSTGRES_USER: root
-          POSTGRES_PASSWORD: secret
-          POSTGRES_DB: simple_bank
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Go
-        uses: actions/setup-go@v2
+      - name: Dagger test
+        uses: dagger/dagger-for-github@v5
         with:
-          go-version: 1.19
-
-      - name: Docker Container
-        run: docker ps
-
-      - name: Start Postgres in docker
-        run: make startpg
-
-      - name: Create test database
-        run: make createdb
-
-      - name: Create test tables
-        run: make createtable
-
-      - name: Run all Test
-        run: make test
-
-      - name: Delete database
-        run: make dropdb
-
-      - name: Delete postgres
-        run: make stoppg
+          verb: run
+          args: go run ci/main.go -test
+  publish:
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ghcr.io/Zbyteio/${{ github.event.repository.name }}
+          tags: |
+            type=sha,enable=true,prefix=CI-,format=short
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Checkout gitops
+        uses: actions/checkout@v2
+        with:
+          repository: Zbyteio/k8s-mvp-gitops
+          fetch-depth: 1
+          ref: main
+          token: ${{ secrets.FORCI }}
+      - name: Set git identity
+        run: |-
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Update, Commit and Push
+        shell: bash
+        run: |-
+          sed -E -i -e "s/([[:space:]]+)image:[[:space:]]+.+/\1image: $(echo ${{ steps.meta.outputs.tags }} | sed -E -e 's/\//\\\//g')/g" dev/${{ github.event.repository.name }}.yaml
+          val=$(cat dev/${{ github.event.repository.name }}.yaml | grep "image:" | cut -d: -f2- | rev | cut -d- -f1 | rev | tr -dc '[:alnum:]')
+          if [[ "${GITHUB_SHA::7}" == "$val" ]]; then
+            git add dev/${{ github.event.repository.name }}.yaml
+            git commit -m "Update version of ${{ github.event.repository.name }} to ${{ steps.meta.outputs.tags }}"
+            git push origin main
+            echo "Pushed commit $val"
+          else
+            echo "::error file=dev/${{ github.event.repository.name }}.yaml,title=update::Failed to update manifest"
+            exit 1
+          fi
