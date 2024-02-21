@@ -31,8 +31,7 @@ jobs:
           pip install requests
 
       - name: Create or update pull request
-        id: create-pr
-      - uses: repo-sync/pull-request@v2
+        uses: repo-sync/pull-request@v2
         name: pull-request
         with:
           destination_branch: "main"
