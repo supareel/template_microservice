@@ -32,7 +32,6 @@ jobs:
 
       - name: Create or update pull request
         uses: repo-sync/pull-request@v2
-        name: pull-request
         with:
           destination_branch: "main"
           pr_title: "Pulling ${{ github.ref }} into main"
