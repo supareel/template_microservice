@@ -48,7 +48,6 @@ jobs:
           draft: true
           branch: main
           labels: "auto-generated"
-          delete-branch: true
           assignees: ${{ github.actor }}
       - name: Check outputs
         if: ${{ steps.cpr.outputs.pull-request-number }}
