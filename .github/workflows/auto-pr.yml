@@ -1,4 +1,4 @@
-name: Automatic draft PR
+name: Automatic Draft PR
 
 on:
   push:
@@ -9,16 +9,11 @@ on:
       - chore/**
 
 jobs:
-  auto-pull-request:
-    name: Create or update draft pull request
+  create-draft-pr:
+    name: Create or Update Draft Pull Request
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      issues: read
-      packages: none
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Set up Python
@@ -26,18 +21,12 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Install dependencies
-        run: |
-          pip install requests
-
-      - name: Create or update pull request
+      - name: Create or Update Pull Request
         uses: repo-sync/pull-request@v2
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
         with:
           destination_branch: "main"
-          pr_title: "Pulling ${{ github.ref }} into main"
-          pr_body: ":crown: *An automated PR*"
-          pr_reviewer: "kingdonb"
+          pr_title: "Automated Draft PR: ${{ github.ref }}"
+          pr_body: "This pull request is automatically generated to incorporate changes from ${{ github.ref }} into the main branch."
+          pr_reviewer: "sourabhmandal"
           pr_draft: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
