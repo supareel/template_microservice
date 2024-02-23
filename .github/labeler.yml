@@ -1,71 +1,70 @@
-# Add 'root' label to any root file changes
-# Quotation marks are required for the leading asterisk
+# Continuous Integration (CI)
 ci:
-- changed-files:
-  - any-glob-to-any-file:
-    - .github/workflows/*
-    - ci/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/workflows/*
+          - ci/**
 
-
+# Maintenance
 maintenance:
-- changed-files:
-  - any-glob-to-any-file:
-    - setup/**
-    - ./*
-    - .github/*
+  - changed-files:
+      - any-glob-to-any-file:
+          - setup/**
+          - ./*
+          - .github/*
 
-# Add 'Documentation' label to any file changes within 'docs' or 'guides' folders
+# Documentation
 documentation:
-- changed-files:
-  - any-glob-to-any-file:
-    - docs/**
-    - guides/**
-    - '**/*.md'
-    - README.md
-    - ./**/README*
+  - changed-files:
+      - any-glob-to-any-file:
+          - docs/**
+          - guides/**
+          - '**/*.md'
+          - README.md
+          - ./**/README*
 
-
-
-# Main application
+# Main Application
 main-application:
-- changed-files:
-  - any-glob-to-any-file:
-    - cmd/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - cmd/**
 
-# Internal package/feature changes
+# Internal Changes
 internal:
-- changed-files:
-  - any-glob-to-any-file:
-    - internal/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - internal/**
 
 # Logger
 logger:
-- changed-files:
-  - any-glob-to-any-file:
-    - pkg/logger/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - pkg/logger/**
 
-# Migrations
+# Database Migrations
 db-migration:
-- changed-files:
-  - any-glob-to-any-file:
-    - migrations/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - migrations/**
 
-# Dockerfile
+# Dockerfile Changes
 docker:
-- changed-files:
-  - any-glob-to-any-file:
-    - Dockerfile
+  - changed-files:
+      - any-glob-to-any-file:
+          - Dockerfile
 
-# Add 'feature' label to any PR where the head branch name starts with `feature` or has a `feature` section in the name
+# Features
 feature:
- - head-branch: ['^feature', 'feature', '^feat', 'feat']
+  - head-branch: ['^feature', 'feature', '^feat', 'feat']
 
+# Chores
 chore:
- - head-branch: ['^chore', 'chore']
+  - head-branch: ['^chore', 'chore']
 
+# Fixes
 fix:
- - head-branch: ['^fix', 'fix']
+  - head-branch: ['^fix', 'fix']
 
-# Add 'release' label to any PR that is opened against the `main` branch
+# Releases
 release:
- - base-branch: 'main'
+  - base-branch: 'main'
