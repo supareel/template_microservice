@@ -12,6 +12,8 @@ jobs:
   create-draft-pr:
     name: Create or Update Draft Pull Request
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
