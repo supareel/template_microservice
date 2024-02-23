@@ -1,57 +1,42 @@
 # Continuous Integration (CI)
 ci:
   - changed-files:
-      - any-glob-to-any-file:
-          - .github/workflows/*
-          - ci/**
+    - any-glob-to-any-file: [ .github/workflows/* , ci/** ]
 
 # Maintenance
 maintenance:
   - changed-files:
-      - any-glob-to-any-file:
-          - setup/**
-          - ./*
-          - .github/*
+    - any-glob-to-any-file: [ setup/** , ./* , .github/* ]
 
 # Documentation
 documentation:
   - changed-files:
-      - any-glob-to-any-file:
-          - docs/**
-          - guides/**
-          - '**/*.md'
-          - README.md
-          - ./**/README*
+    - any-glob-to-any-file: [docs/**, guides/**, '**/*.md', README.md, ./**/README*]
 
 # Main Application
 main-application:
   - changed-files:
-      - any-glob-to-any-file:
-          - cmd/**
+    - any-glob-to-any-file: [ cmd/** ]
 
 # Internal Changes
 internal:
   - changed-files:
-      - any-glob-to-any-file:
-          - internal/**
+    - any-glob-to-any-file: [ internal/** ]
 
 # Logger
 logger:
   - changed-files:
-      - any-glob-to-any-file:
-          - pkg/logger/**
+    - any-glob-to-any-file: [ pkg/logger/**]
 
 # Database Migrations
 db-migration:
   - changed-files:
-      - any-glob-to-any-file:
-          - migrations/**
+    - any-glob-to-any-file: [ migrations/** ]
 
 # Dockerfile Changes
 docker:
   - changed-files:
-      - any-glob-to-any-file:
-          - Dockerfile
+    - any-glob-to-any-file: [ Dockerfile ]
 
 # Features
 feature:
