@@ -1,38 +1,70 @@
-# ----------------------------------------------------------------------- #
-# ******************************* General ******************************* #
-# ----------------------------------------------------------------------- #
+# Add 'root' label to any root file changes
+# Quotation marks are required for the leading asterisk
 ci:
-  - .github/workflows/*
-  - ci/**
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/workflows/*
+    - ci/**
 
 maintenance:
-  - ./*
-  - .github/*
+- changed-files:
+  - any-glob-to-any-file:
+    - setup/**
+    - ./*
+    - .github/*
 
+# Add 'Documentation' label to any file changes within 'docs' or 'guides' folders
 documentation:
-  - README.md
-  - ./**/README*
+- changed-files:
+  - any-glob-to-any-file:
+    - docs/**
+    - guides/**
+    - '**/*.md'
+    - README.md
+    - ./**/README*
 
-# ----------------------------------------------------------------------- #
-# ******************************* Project ******************************* #
-# ----------------------------------------------------------------------- #
+
 
 # Main application
 main-application:
-  - cmd/**
+- changed-files:
+  - any-glob-to-any-file:
+    - cmd/**
 
 # Internal package/feature changes
 internal:
-  - internal/**
+- changed-files:
+  - any-glob-to-any-file:
+    - internal/**
 
 # Logger
 logger:
-  - pkg/logger/**
+- changed-files:
+  - any-glob-to-any-file:
+    - pkg/logger/**
 
 # Migrations
 db-migration:
-  - migrations/**
+- changed-files:
+  - any-glob-to-any-file:
+    - migrations/**
 
 # Dockerfile
 docker:
-  - Dockerfile
+- changed-files:
+  - any-glob-to-any-file:
+    - Dockerfile
+
+# Add 'feature' label to any PR where the head branch name starts with `feature` or has a `feature` section in the name
+feature:
+ - head-branch: ['^feature', 'feature', '^feat', 'feat']
+
+chore:
+ - head-branch: ['^chore', 'chore']
+
+fix:
+ - head-branch: ['^fix', 'fix']
+
+# Add 'release' label to any PR that is opened against the `main` branch
+release:
+ - base-branch: 'main'
