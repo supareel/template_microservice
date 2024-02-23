@@ -1,4 +1,4 @@
-name: Automatic draft PR
+name: Automatic Draft PR
 
 on:
   push:
@@ -9,24 +9,33 @@ on:
       - chore/**
 
 jobs:
-  auto-pull-request:
-    name: Create or update draft pull request
+  create-draft-pr:
+    name: Create or Update Draft Pull Request
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
-      - name: Create or update pull request
-        id: create-pr
-        uses: vsoch/pull-request-action@1.0.19
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PASS_ON_ERROR: true
-          PULL_REQUEST_UPDATE: false
-          PULL_REQUEST_DRAFT: true
-          PULL_REQUEST_ASSIGNEES: ${{ github.actor }}
-          PULL_REQUEST_BRANCH: main
-          PULL_REQUEST_TITLE: '${{ github.ref_name }}: Merge into main'
-          PULL_REQUEST_BODY: |
-            > This PR is auto created, please update PR Title and body as per your need.
-
-            ## Description
-
-            Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Check Git version
+        run: git --version
+      - name: Create or Update Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Replace with your personal access token
+          title: "Automated Draft PR: ${{ github.ref }}"  # Optional: customize the title
+          body: "This pull request is automatically generated to incorporate changes from ${{ github.ref }} into the main branch."  # Optional: customize the body
+          branch: "main" # Change this to your destination branch if needed
+          assignees: "sourabhmandal" # Optional: add assignees
+          labels: "draft" # Optional: add labels
+          reviewers: "sourabhmandal" # Optional: add reviewers
+          draft: true # Keep this to create a draft PR
+        # uses: repo-sync/pull-request@v2
+        # with:
+        #   destination_branch: "main"
+        #   pr_title: "Automated Draft PR: ${{ github.ref }}"
+        #   pr_body: "This pull request is automatically generated to incorporate changes from ${{ github.ref }} into the main branch."
+        #   pr_reviewer: "sourabhmandal"
+        #   pr_draft: true
+        #   github_token: ${{ secrets.GITHUB_TOKEN }}

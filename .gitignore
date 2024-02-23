@@ -1,2 +1,7 @@
+.idea
 .temp
 .env.development
+.vscode
+.run
+_generated_
+build

@@ -1,3 +1,8 @@
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+current_dir := $(patsubst %/,%,$(dir $(mkfile_path)))
+
+setup:
+	./setup/setup
 stoppg:
 	docker stop postgres && docker rm postgres 
 
@@ -8,27 +13,23 @@ createdb:
 	docker exec -it postgres createdb --username=root --owner=root microservice_db
 
 createtable:
-	go run .\cmd\migrate\migrate.go
+	go run .\src\cmd\migrate\migrate.go
 
 dropdb:
 	docker exec -it postgres dropdb microservice_db
 
 test:
-	go test -v -cover ./internal/... ./database/... ./util/...
-
-protogen:
-	cd proto && buf generate
+	go test -v -cover ./src/...
 
 server:
-	go run cmd/server/server.go
+	go run src/cmd/server/server.go
 
 client:
-	go run cmd/client/client.go
+	go run src/cmd/client/client.go
 
-entgen:
-	go generate ./...
+api-server:
+	go run github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen --config=$(current_dir)/src/server.gen.yaml $(current_dir)/src/task.yaml
+api-client:
+	go run github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen --config=$(current_dir)/src/client.gen.yaml $(current_dir)/src/task.yaml
 
-entinit:
-	go run entgo.io/ent/cmd/ent init [ModelName]
-
-.PHONY: stoppg startpg createdb dropdb test protogen server client entgen entinit
+.PHONY: setup stoppg startpg createdb dropdb test protogen server client entgen entinit
