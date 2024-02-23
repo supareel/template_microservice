@@ -43,5 +43,4 @@ func LoadEnvConfig() {
 	EnvConfig.GIN_MODE = os.Getenv("GIN_MODE")
 	EnvConfig.ACCESS_TOKEN_DURATION = os.Getenv("ACCESS_TOKEN_DURATION")
 	EnvConfig.TOKEN_SYMMETRIC_KEY = os.Getenv("TOKEN_SYMMETRIC_KEY")
-
 }
