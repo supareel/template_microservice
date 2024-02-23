@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches: [main, ci]
-  pull_request:
+  pull_request_target:
     branches: [main, ci]
     paths-ignore:
       - "**/*.md"
@@ -34,9 +34,9 @@ jobs:
           args: go run ci/main.go -test
   publish:
     runs-on: ubuntu-latest
-    needs: test
+    needs: lint_and_test
     permissions:
-      contents: read
+      contents: write
       packages: write
     if: github.event_name == 'push'
     steps:

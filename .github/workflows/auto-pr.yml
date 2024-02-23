@@ -1,4 +1,4 @@
-name: Automatic draft PR
+name: Automatic Draft PR
 
 on:
   push:
@@ -9,16 +9,14 @@ on:
       - chore/**
 
 jobs:
-  auto-pull-request:
-    name: Create or update draft pull request
+  create-draft-pr:
+    name: Create or Update Draft Pull Request
     runs-on: ubuntu-latest
     permissions:
-      contents: write
       pull-requests: write
-      issues: read
-      packages: none
+      contents: write
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Set up Python
@@ -26,31 +24,12 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Install dependencies
-        run: |
-          pip install requests
-
-      - name: Create or update pull request
-        id: create-pr
-        uses: peter-evans/create-pull-request@v6
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Create or Update Pull Request
+        uses: repo-sync/pull-request@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Auto-generated draft PR"
-          title: "${{ github.ref_name }}: Merge into main"
-          body: |
-            > This PR is auto created, please update PR Title and body as per your need.
-
-            ## Description
-
-            Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
-          draft: true
-          branch: main
-          labels: "auto-generated"
-          assignees: ${{ github.actor }}
-      - name: Check outputs
-        if: ${{ steps.cpr.outputs.pull-request-number }}
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          destination_branch: "main"
+          pr_title: "Automated Draft PR: ${{ github.ref }}"
+          pr_body: "This pull request is automatically generated to incorporate changes from ${{ github.ref }} into the main branch."
+          pr_reviewer: "sourabhmandal"
+          pr_draft: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
