@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      with:
+        repository: "supareel/template_microservice"
     - name: Pull Request Labeler
       uses: actions/labeler@v5
       with:

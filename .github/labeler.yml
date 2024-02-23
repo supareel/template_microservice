@@ -1,10 +1,10 @@
 # Add 'root' label to any root file changes
 # Quotation marks are required for the leading asterisk
 ci:
-  - changed-files:
-    - any-glob-to-any-file:
-      - .github/workflows/*
-      - ci/**
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/workflows/*
+    - ci/**
 
 
 maintenance:
