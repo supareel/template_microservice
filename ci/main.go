@@ -46,4 +46,10 @@ func main() {
 		}
 	}
 
+	if testFlag {
+		if err := ci.Test(ctx, client); err != nil {
+			panic(err)
+		}
+	}
+
 }

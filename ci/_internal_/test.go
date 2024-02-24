@@ -3,51 +3,42 @@ package ci
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"dagger.io/dagger"
 )
 
 func Test(ctx context.Context, client *dagger.Client) error {
-	fmt.Println("Building with Dagger")
-
-	// expose host service on port 3306
-	hostSrv := client.Host().Service([]dagger.PortForward{
-		{Frontend: 7001, Backend: 7001},
-	})
+	fmt.Println("Testing with Dagger")
 
 	// get reference to the local project
 	project := client.Host().Directory(".")
 
-	// define the application build command
-	path := "build/"
-	serverEntrypoint := "src/cmd/server/server.go"
+	// Database service used for application tests
+	database := client.Container().From("postgres:15.2").
+		WithEnvVariable("POSTGRES_PASSWORD", "test").
+		WithExec([]string{"postgres"}).
+		WithExposedPort(5432).
+		AsService()
 
-	// get `golang` image
-	builder := client.Container().
-		From("golang:latest").
-		WithLabel("org.opencontainers.image.title", "my-alpine").
-		WithLabel("org.opencontainers.image.version", "1.0").
-		WithLabel("org.opencontainers.image.created", time.Now().String()).
-		WithLabel("org.opencontainers.image.source", "https://github.com/alpinelinux/docker-alpine").
-		WithLabel("org.opencontainers.image.licenses", "MIT").
+	// Run application tests
+	out, err := client.Container().From("golang:1.21.7-alpine3.19").
+		WithServiceBinding("db", database).     // bind database with the name db
+		WithEnvVariable("DB_HOST", "db").       // db refers to the service binding
+		WithEnvVariable("DB_PASSWORD", "test"). // password set in db container
+		WithEnvVariable("DB_USER", "postgres"). // default user in postgres image
+		WithEnvVariable("DB_NAME", "postgres"). // default db name in postgres image
 		WithDirectory("/src", project).
 		WithWorkdir("/src").
-		WithServiceBinding("db", hostSrv).
 		WithEnvVariable("CGO_ENABLED", "0").
-		WithExec([]string{"go", "build", "-o", path, serverEntrypoint})
+		WithExec([]string{"go", "test", "-v", "-cover", "./..."}).
+		Stdout(ctx)
 
-	prodImage := client.Container().
-		From("alpine").
-		WithFile(path, builder.File(serverEntrypoint)).
-		WithEntrypoint([]string{path}).WithExposedPort(7001)
-
-	addr, err := prodImage.Publish(ctx, "hub.docker.io/multistage")
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(addr)
+	fmt.Print(out)
+	fmt.Println("Tests passed successfully")
 
 	return nil
 }
