@@ -4,7 +4,7 @@ on:
     types: [opened, edited, synchronize]
 
 jobs:
-  triage:
+  label_pr:
     runs-on: ubuntu-latest
     permissions:
       contents: read

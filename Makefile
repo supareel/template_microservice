@@ -18,8 +18,8 @@ createtable:
 dropdb:
 	docker exec -it postgres dropdb microservice_db
 
-test:
-	go test -v -cover ./src/...
+openapi-gen:
+	swag init -g ../../cmd/server/server.go -d ./src/internal/taskmanager
 
 server:
 	go run src/cmd/server/server.go

@@ -40,50 +40,17 @@ jobs:
       packages: write
     if: github.event_name == 'push'
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
         with:
-          images: ghcr.io/Zbyteio/${{ github.event.repository.name }}
-          tags: |
-            type=sha,enable=true,prefix=CI-,format=short
-      - name: Login to GHCR
-        uses: docker/login-action@v1
+          go-version: ">=1.20"
+
+      - name: Dagger build
+        uses: dagger/dagger-for-github@v5
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: .
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-      - name: Checkout gitops
-        uses: actions/checkout@v2
-        with:
-          repository: Zbyteio/k8s-mvp-gitops
-          fetch-depth: 1
-          ref: main
-          token: ${{ secrets.FORCI }}
-      - name: Set git identity
-        run: |-
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-      - name: Update, Commit and Push
-        shell: bash
-        run: |-
-          sed -E -i -e "s/([[:space:]]+)image:[[:space:]]+.+/\1image: $(echo ${{ steps.meta.outputs.tags }} | sed -E -e 's/\//\\\//g')/g" dev/${{ github.event.repository.name }}.yaml
-          val=$(cat dev/${{ github.event.repository.name }}.yaml | grep "image:" | cut -d: -f2- | rev | cut -d- -f1 | rev | tr -dc '[:alnum:]')
-          if [[ "${GITHUB_SHA::7}" == "$val" ]]; then
-            git add dev/${{ github.event.repository.name }}.yaml
-            git commit -m "Update version of ${{ github.event.repository.name }} to ${{ steps.meta.outputs.tags }}"
-            git push origin main
-            echo "Pushed commit $val"
-          else
-            echo "::error file=dev/${{ github.event.repository.name }}.yaml,title=update::Failed to update manifest"
-            exit 1
-          fi
+          verb: run
+          args: go run ci/main.go -build
+
