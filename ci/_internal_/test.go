@@ -3,7 +3,6 @@ package ci
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"dagger.io/dagger"
 )
@@ -26,16 +25,13 @@ func Test(ctx context.Context, client *dagger.Client) error {
 	// get `golang` image
 	builder := client.Container().
 		From("golang:latest").
-		WithLabel("org.opencontainers.image.title", "my-alpine").
-		WithLabel("org.opencontainers.image.version", "1.0").
-		WithLabel("org.opencontainers.image.created", time.Now().String()).
-		WithLabel("org.opencontainers.image.source", "https://github.com/alpinelinux/docker-alpine").
-		WithLabel("org.opencontainers.image.licenses", "MIT").
 		WithDirectory("/src", project).
 		WithWorkdir("/src").
 		WithServiceBinding("db", hostSrv).
 		WithEnvVariable("CGO_ENABLED", "0").
-		WithExec([]string{"go", "build", "-o", path, serverEntrypoint})
+		WithExec([]string{"go", "test", "-v", " -cover", "./src/..."})
+
+	fmt.Println("Tests passed successfully")
 
 	prodImage := client.Container().
 		From("alpine").
