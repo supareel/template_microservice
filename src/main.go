@@ -1,8 +1,10 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"gomicro/docs"
+	"gomicro/src/cmd/migrate"
 	"gomicro/src/config"
 	"gomicro/src/database"
 	"gomicro/src/internal/taskmanager"
@@ -39,6 +41,15 @@ import (
 // @externalDocs.description				OpenAPI
 // @externalDocs.url						https://swagger.io/resources/open-api/
 func main() {
+
+	var (
+		migrateFlag bool
+	)
+
+	flag.BoolVar(&migrateFlag, "migrate", false, "used to run migration command")
+
+	flag.Parse()
+
 	// programmatically set swagger info
 	docs.SwaggerInfo.Title = "Task manager APIs"
 	docs.SwaggerInfo.Description = "A sample OpenApi docs generator using swag"
@@ -49,11 +60,6 @@ func main() {
 
 	godotenv.Load(".env.development")
 	config.LoadEnvConfig()
-
-	router := gin.Default()
-
-	// use ginSwagger middleware to serve the API docs
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// connect to DB
 	db, err := database.NewPostgresClient(
@@ -68,6 +74,14 @@ func main() {
 	}
 	defer db.CloseClient()
 
+	if migrateFlag {
+		migrate.Migrate()
+	}
+
+	router := gin.Default()
+
+	// use ginSwagger middleware to serve the API docs
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// version router
 	// v1 := router.Group("/api/v1"){}
 

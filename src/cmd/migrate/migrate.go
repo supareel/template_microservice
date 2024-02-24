@@ -1,4 +1,4 @@
-package main
+package migrate
 
 import (
 	"gomicro/src/config"
@@ -8,7 +8,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
+func Migrate() {
 	godotenv.Load(".env.development")
 	config.LoadEnvConfig()
 	// connect to DB
