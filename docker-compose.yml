@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_USERNAME: 'postgres'
+      DB_PASS: 'password'
+      DB_SERVER: 'db'
+      DB_PORT: 5432
+      DB_NAME: 'app_db'
+      DB_SSL: 'disable'
+      TOKEN_SYMMETRIC_KEY: '12345678901234567890123456789012'
+      ACCESS_TOKEN_DURATION: '15m'
+      GIN_MODE: 'debug'
+      HTTP_PORT: 7006
+      WATCH_ENABLED: true # Enable watch
+    ports:
+      - 7006:7006
+    develop:
+      watch:
+        - action: rebuild
+          files:
+            - ./**/*.go
+            - ./go.mod
+            - ./go.sum
+          ignore:
+            - .env.*
+            - .env
+            - .gitignore
+            - .git/*
+            - vendor/*
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres
+    restart: always
+    user: postgres
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'app_db'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+volumes:
+  db-data:

@@ -43,6 +43,10 @@ func (db *Database) CloseClient() {
 
 // create schema in db
 func (db *Database) MigrateDB(dbTimeOut int8) {
+	fmt.Println("==========================================================")
+	fmt.Println("=============     DB MIGRATION RUNNING     ===============")
+	fmt.Println("==========================================================")
+
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(dbTimeOut)*time.Second)
 	defer cancel()
 	// run migration
