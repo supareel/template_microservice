@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"gomicro/docs"
-	"gomicro/src/cmd/migrate"
 	"gomicro/src/config"
 	"gomicro/src/database"
 	"gomicro/src/internal/taskmanager"
@@ -75,7 +74,7 @@ func main() {
 	defer db.CloseClient()
 
 	if migrateFlag {
-		migrate.Migrate()
+		db.MigrateDB(40)
 	}
 
 	router := gin.Default()
