@@ -1,10 +1,8 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"gomicro/docs"
-	"gomicro/src/cmd/migrate"
 	"gomicro/src/config"
 	"gomicro/src/database"
 	"gomicro/src/internal/taskmanager"
@@ -41,15 +39,6 @@ import (
 // @externalDocs.description				OpenAPI
 // @externalDocs.url						https://swagger.io/resources/open-api/
 func main() {
-
-	var (
-		migrateFlag bool
-	)
-
-	flag.BoolVar(&migrateFlag, "migrate", false, "used to run migration command")
-
-	flag.Parse()
-
 	// programmatically set swagger info
 	docs.SwaggerInfo.Title = "Task manager APIs"
 	docs.SwaggerInfo.Description = "A sample OpenApi docs generator using swag"
@@ -74,9 +63,7 @@ func main() {
 	}
 	defer db.CloseClient()
 
-	if migrateFlag {
-		migrate.Migrate()
-	}
+	db.MigrateDB(40)
 
 	router := gin.Default()
 
