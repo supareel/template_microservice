@@ -20,10 +20,10 @@ type TaskRepository interface {
 }
 
 type TaskRepo struct {
-	db database.Database
+	db *database.Database
 }
 
-func NewPostgresRepository(db database.Database) *TaskRepo {
+func NewPostgresRepository(db *database.Database) *TaskRepo {
 	return &TaskRepo{
 		db: db,
 	}
