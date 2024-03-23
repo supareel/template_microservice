@@ -51,7 +51,7 @@ func main() {
 	config.LoadEnvConfig()
 
 	// connect to DB
-	db, err := database.NewPostgresClient(
+	db, err := database.GetConnection(
 		config.EnvConfig.DB_USERNAME,
 		config.EnvConfig.DB_PASS,
 		config.EnvConfig.DB_SERVER,
